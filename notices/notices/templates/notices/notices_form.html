@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block menu_notice %}
+active
+{% endblock %}
+{% block content %}
+<div class="ui grid">
+  <div class="row">
+    <div class="thirteen wide column">
+      <div class="ui segment blue">
+	<h5 class="ui dividing header"> <i class="announcement icon"></i> Notice &raquo; Add New</h5>
+	{% if form.errors %}
+	{% for error in form.errors %}
+	<div class="ui error message">{{ error.title }} is missing </div>
+	{% endfor %}
+	{% endif %}
+	{% if messages %}
+	  {% for message in messages %}
+	  <div {% if message.tags %} class="ui message {{ message.tags }}"{% endif %}>{{ message }}</div>
+	  {% endfor %}
+	{% endif %}
+	<form method="post" action="">
+	  {% csrf_token %}
+	  <script type="text/javascript">
+    	    $(document).ready(function(){
+		$('select').dropdown() ; 
+	    });
+	  </script>
+	  <div class="ui form">
+	    <div class="two fields">
+	      
+	      <div class="field">
+		<label>Title</label>
+		<input placeholder="Notice Title" type="text" name="title">
+	      </div>
+	      <div class="field">
+		<label>To / Receiver</label>
+		<div class="ui selection fluid">
+		  {{ form.receiver }}
+		</div>
+		
+	      </div>
+	    </div>
+	    <div class="field">
+	      <label>Message</label>
+	      <textarea placeholder="Your message body" name="body" cols="100" rows="100"></textarea>
+	    </div>
+	    <div class="field">
+	      <button type="submit" class="ui small button blue"><i class="icon plus"></i> Add Notice</button>	      
+	    </div>
+	  </div>
+	  
+	
+
+	</form>
+      </div>
+    </div>
+    <div class="three wide column">
+      <div class="ui vertical blue menu fluid">
+	<a class="item header">Menu Options </a>
+	<a class="item" href="/notices/"><i class="Announcement icon"></i> All Notices</a>
+	<a class="item active" href="/notices/add/"><i class="plus icon"></i> Add Notice</a>
+
+
+	
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+{% endblock %}
