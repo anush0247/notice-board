@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <title>Online Portal &rarr; Login </title>
+    
+    <link href="/static/assets/semantic.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/assets/app.css" rel="stylesheet" type="text/css">
+  </head>
+  <body class="body_layout">
+    <center>
+      <div class="ui grid" style="padding-top:15%;">
+	<div class="row">
+	  <div class="six wide column">
+	    &nbsp;
+	  </div>
+	  <div class="four wide column">
+	    <div class="ui piled segment blue " style="padding:7%;padding-top:0%;">
+	      {% if form.errors %}
+	      <div class="ui error message">Your username and password didn't match. Please try again.</div>
+	      {% endif %}
+	      <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+		{% csrf_token %}
+		<div class="ui blue dividing header">
+		  <i class="sign in icon"></i>
+		  <div class="content">
+		    Login
+		  </div>
+		</div>
+		<div class="ui form small">
+		  <div class="six field">
+		    <div class="field small ui labeled input ">
+		      <div class="ui label"> <i class="user icon"></i></div>
+		      <input type="text" name="username" placeholder="username">
+		    </div>
+		    <div class="field small ui labeled input">
+		      <div class="ui label"> <i class="key icon"></i></div>
+		      <input type="password" name="password" placeholder="my password">
+		    </div>
+		    <div class="field ">
+		      <button type="submit" class=" blue fluid ui button small"><i class="angle double right icon"></i> Continue to Online Portal</button>
+		    </div>
+		  </div>
+		</div>
+		<input type="hidden" name="next" value="{{ next }}" />
+	      </form>
+	      <a href="#" class="text blue" style="font-size:11px;"><i class="question icon"></i> Lost Password</a>  
+	    </div>
+	  </div>
+	  <div class="six wide column">
+	    &nbsp;
+	  </div>
+	  
+	</div>
+	<div class="row">
+	  <div class="sixteen wide column" style="text-align:center;">
+	    
+	  </div>
+	</div>
+      </div>
+      
+    </center>
+    
+  </body>
+</html>
