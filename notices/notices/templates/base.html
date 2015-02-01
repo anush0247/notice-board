@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Notice Board</title>
+    <link href="/static/assets/semantic.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/assets/app.css" rel="stylesheet" type="text/css">
+  </head>
+  <body class="body_layout">
+    
+    {% block menu  %}
+    <div class="ui menu blue">
+      <div class="item active"><b>Online Portal <small>v2.0</small></b></div>
+      <div class="right menu">
+	<a class="item" href="/notices/"><i class="Announcement icon"></i>Notice Board </a>
+	<a class="item"><i class="user group icon"></i> Faculty </a>
+	<a class="item"><i class="student icon"></i> People </a>
+	<a class="item"><i class="file icon"></i> Resources </a>
+	<a class="item"><i class="info icon"></i> About us </a>
+	<a class="item"><i class="sign in icon"></i> Login </a>	
+      </div>
+    </div>
+    {% endblock %}
+    <div class="ui grid">
+       <div class="row">
+	 <div class="sixteen wide column">
+	   <div class="" style="min-height:550px;">
+	    {% block content %} {% endblock %}
+	   </div>
+	 </div>
+	</div>
+    </div>
+   
+  </body>
+</html>
