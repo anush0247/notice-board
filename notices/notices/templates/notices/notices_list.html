@@ -23,7 +23,7 @@ active
 	    {% for notice in object_list  %}
 	    <tr>
 	      <td class="center aligned" width="5%">{{ notice.id }}</td>
-	      <td >{{ notice.title }}</td>
+	      <td ><a href="{% url 'notice_detail' pk=notice.id %}">{{ notice.title }}</td>
 	      <td class="center aligned" width="5%">{{ notice.receiver }}</td>
 	      <td class="center aligned" width="12%">{{ notice.sentat|date:"M j, Y" }}</td>
 	    </tr>
@@ -53,8 +53,9 @@ active
     </div>
     <div class="three wide column">
       <div class="ui vertical blue menu fluid">
-	<a class="active item" href="#"><i class="Announcement icon"></i> All Notices</a>
-	<a class="item" href="#"><i class="plus icon"></i> Add Notice</a>
+	<a class="item header">Menu Options </a>
+	<a class="item active" href="/notices/"><i class="Announcement icon"></i> All Notices</a>	
+	<a class="item" href="/notices/add/"><i class="plus icon"></i> Add Notice</a>
       </div>
     </div>
     
