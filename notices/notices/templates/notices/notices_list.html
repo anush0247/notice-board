@@ -30,7 +30,6 @@ active
 	    {% endfor %}
 	  </tbody>
 	</table>
-
 	<!--<a class="ui blue tag label" style="float:right">Page 10</a>-->
 	{% if is_paginated %}
 	<div class="ui pagination menu" style="float:left">
@@ -53,8 +52,12 @@ active
     </div>
     <div class="three wide column">
       <div class="ui vertical blue menu fluid">
-	<a class="item header">Menu Options </a>
-	<a class="item active" href="/notices/"><i class="Announcement icon"></i> All Notices</a>	
+	<a class="item header">Notices Filter </a>
+	<a class="item {% ifequal year 'All' %}active{% endifequal %}" href="/notices/"><i class="Announcement icon"></i> All Notices</a>
+	<a class="item {% ifequal year 'E4' %}active{% endifequal %}" href="/notices/E4/"><i class="Announcement icon"></i> E4 </a>
+	<a class="item {% ifequal year 'E3' %}active{% endifequal %}" href="/notices/E3/"><i class="Announcement icon"></i> E3 </a>
+	<a class="item {% ifequal year 'E2' %}active{% endifequal %}" href="/notices/E2/"><i class="Announcement icon"></i> E2 </a>	
+	<a class="item header">Options</a>
 	<a class="item" href="/notices/add/"><i class="plus icon"></i> Add Notice</a>
       </div>
     </div>

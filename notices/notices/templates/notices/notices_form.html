@@ -7,7 +7,7 @@ active
   <div class="row">
     <div class="thirteen wide column">
       <div class="ui segment blue">
-	<h5 class="ui dividing header"> <i class="announcement icon"></i> Notice &raquo; Add New</h5>
+	<h5 class="ui dividing header"> <i class="announcement icon"></i> Notice &raquo; {% if not object.pk %} Add New {% else %} Update Notice #{{ object.pk }} {% endif %}</h5>
 	{% if form.errors %}
 	{% for error in form.errors %}
 	<div class="ui error message">{{ error.title }} is missing </div>
@@ -18,6 +18,7 @@ active
 	  <div {% if message.tags %} class="ui message {{ message.tags }}"{% endif %}>{{ message }}</div>
 	  {% endfor %}
 	{% endif %}
+	{{ object.year }}
 	<form method="post" action="">
 	  {% csrf_token %}
 	  <script type="text/javascript">
@@ -30,7 +31,7 @@ active
 	      
 	      <div class="field">
 		<label>Title</label>
-		<input placeholder="Notice Title" type="text" name="title">
+		{{ form.title }}
 	      </div>
 	      <div class="field">
 		<label>To / Receiver</label>
@@ -42,24 +43,29 @@ active
 	    </div>
 	    <div class="field">
 	      <label>Message</label>
-	      <textarea placeholder="Your message body" name="body" cols="100" rows="100"></textarea>
+	      {{ form.body }}
+	      
 	    </div>
 	    <div class="field">
 	      <button type="submit" class="ui small button blue"><i class="icon plus"></i> Add Notice</button>	      
 	    </div>
 	  </div>
-	  
-	
-
 	</form>
       </div>
     </div>
     <div class="three wide column">
       <div class="ui vertical blue menu fluid">
-	<a class="item header">Menu Options </a>
+	<a class="item header">Notices Filter  </a>
 	<a class="item" href="/notices/"><i class="Announcement icon"></i> All Notices</a>
-	<a class="item active" href="/notices/add/"><i class="plus icon"></i> Add Notice</a>
-
+	<a class="item" href="/notices/E4/"><i class="Announcement icon"></i> E4 </a>
+	<a class="item" href="/notices/E3/"><i class="Announcement icon"></i> E3 </a>
+	<a class="item" href="/notices/E2/"><i class="Announcement icon"></i> E2 </a>
+	<a class="item header">Options  </a>
+	<a class="item {% if not object.pk %}active{% endif %}" href="/notices/add/"><i class="plus icon"></i> Add Notice</a>
+	{% if object.pk %}
+	<a class="item active" href="/notices/{{ object.pk }}/update"><i class="edit icon"></i> Update</a>
+	<a class="item " href="/notices/{{ object.pk }}/delete"><i class="trash icon"></i> Delete</a>
+	{% endif %}
 
 	
       </div>
