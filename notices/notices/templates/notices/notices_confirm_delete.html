@@ -1,45 +1,29 @@
-{% extends "base.html" %}
-{% block menu_notice %}
-active
+{% extends "notices_base.html" %}
+{% block title %}
+Confirm Delete
 {% endblock %}
-{% block content %}
-<div class="ui grid">
-  <div class="row">
-    <div class="thirteen wide column">
-      <div class="ui segment blue">
-	<h5 class="ui dividing header"> <i class="announcement icon"></i> Notice &raquo; Delete </h5>
-	
-	<form method="post" action="">
-	  {% csrf_token %}
-	  <script type="text/javascript">
-    	    $(document).ready(function(){
-		$('select').dropdown() ; 
-	    });
-	  </script>
-	  
-	  <h4 class="ui header"> Are you sure ?</h4>
-	  <button type="submit" class="ui tiny button negative" style="float:right"><i class="trash icon"></i> Confirm Delete</button>
-	  <a class="positive ui button tiny" style="float:right" href="{% url 'notice_detail' pk=object.pk %}"><i class="icon Arrow Left"></i> Cancel </a>
-	</form>
-      </div>
-    </div>
-    <div class="three wide column">
-      <div class="ui vertical blue menu fluid">
-	<a class="item header">Notices Filter </a>
-	<a class="item" href="/notices/"><i class="Announcement icon"></i> All Notices</a>
-	<a class="item" href="/notices/E4"><i class="Announcement icon"></i> E4</a>
-	<a class="item" href="/notices/E3"><i class="Announcement icon"></i> E3</a>
-	<a class="item" href="/notices/E2"><i class="Announcement icon"></i> E2</a>
-	<a class="item header">Options </a>
-	<a class="item" href="/notices/add/"><i class="plus icon"></i> Add Notice</a>
-	<a class="item" href="/notices/{{ object.pk }}/update"><i class="edit icon"></i> Update</a>
-	<a class="active item" href="/notices/{{ object.pk }}/delete"><i class="trash icon"></i> Delete</a>
-	
-	
-      </div>
-    </div>
-    
-  </div>
-</div>
-
+{% block main %}
+<h5 class="ui dividing header"> <i class="announcement icon"></i> Notice &raquo; Delete </h5>
+<form method="post" action="">
+  {% csrf_token %}
+  <script type="text/javascript">
+    $(document).ready(function(){
+	$('select').dropdown() ; 
+    });
+  </script>
+  <h4 class="ui header"> Are you sure ?</h4>
+  <button type="submit" class="ui tiny button negative" style="float:right"><i class="trash icon"></i> Confirm Delete</button>
+  <a class="positive ui button tiny" style="float:right" href="{% url 'notice_detail' pk=object.pk %}"><i class="icon Arrow Left"></i> Cancel </a>
+</form>
+{% endblock %}
+{% block filter %}
+<a class="item" href="/notices/"><i class="Announcement icon"></i> All Notices</a>
+<a class="item" href="/notices/E4"><i class="Announcement icon"></i> E4</a>
+<a class="item" href="/notices/E3"><i class="Announcement icon"></i> E3</a>
+<a class="item" href="/notices/E2"><i class="Announcement icon"></i> E2</a>
+{% endblock %}
+{% block options %}
+<a class="item" href="/notices/add/"><i class="plus icon"></i> Add Notice</a>
+<a class="item" href="/notices/{{ object.pk }}/update"><i class="edit icon"></i> Update</a>
+<a class="active item" href="/notices/{{ object.pk }}/delete"><i class="trash icon"></i> Delete</a>
 {% endblock %}

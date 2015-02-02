@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block menu_notice %}
+active
+{% endblock %}
+{% block content %}
+
+<div class="ui grid">
+  <div class="row">
+    <div class="thirteen wide column">
+
+      {% if messages %}
+      {% for message in messages %}
+      <div {% if message.tags %} class="ui message {{ message.tags }}"{% endif %}>{{ message }}</div>
+      {% endfor %}
+      {% endif %}
+      
+      <div class="ui segment blue">
+	{% block main %}
+	{% endblock %}
+      </div>
+      
+    </div>
+    <div class="three wide column">
+      <div class="ui vertical blue menu fluid">
+	<a class="item header">Notices Filter </a>
+	{% block filter %}
+	{% endblock %}
+	<a class="item header">Options</a>
+	{% block options %}
+	{% endblock %}
+      </div>
+    </div>
+{% endblock %}

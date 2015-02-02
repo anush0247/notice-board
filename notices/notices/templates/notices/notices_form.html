@@ -1,128 +1,112 @@
-{% extends "base.html" %}
-{% block menu_notice %}
-active
+{% extends "notices_base.html" %}
+{% block title %} Add Notice
 {% endblock %}
-{% block content %}
-<div class="ui grid">
-  <div class="row">
-    <div class="thirteen wide column">
-      <div class="ui segment blue">
-	<h5 class="ui dividing header"> <i class="announcement icon"></i> Notice &raquo; {% if not object.pk %} Add New {% else %} Update Notice #{{ object.pk }} {% endif %}</h5>
-	{% if form.errors %}
-	{% for error in form.errors %}
-	<div class="ui error message">{{ error.title }} is missing </div>
-	{% endfor %}
-	{% endif %}
-	{% if messages %}
-	  {% for message in messages %}
-	  <div {% if message.tags %} class="ui message {{ message.tags }}"{% endif %}>{{ message }}</div>
-	  {% endfor %}
-	{% endif %}
-	  
-	<form method="post" action="" enctype="multipart/form-data">
-	  {% csrf_token %}
-	  <script type="text/javascript">
-    	    $(document).ready(function(){
-		$('select').dropdown() ; 
-	    });
-	  </script>
-	  <div class="ui form">
-	    <div class="two fields">
-	      
-	      <div class="field">
-		<label>Title</label>
-		{{ form.title }}
-	      </div>
-	      <div class="field">
-		<label>To / Receiver</label>
-		<div class="ui selection fluid">
-		  {{ form.receiver }}
-		</div>
-		
-	      </div>
-	    </div>
-	    <div class="field">
-	      <label>Message</label>
-	      {{ form.body }}
-	    </div>
-	    
-	    <div class="field">
-	      <label>Attachment</label>
-	      <div class="ui action input">
-		<input type="text" id="_attachmentName">
-		<label for="attachmentName" class="ui icon button btn-file">
-		  <i class="attachment basic icon attach"></i>
-		  <!--<input type="file" id="attachmentName" name="attachment" style="display: none">-->
-		  {{ form.attachment }}
-		</label>
-	      </div>
-	    </div> 
-	    
-	    <div class="field">
-	      <button type="submit" class="ui small button blue"> {% if not object.pk %} <i class="icon plus"></i> Add New {% else %} <i class="icon Checkmark"> </i>Update Notice {% endif %} </button>	      
-	    </div>
-	  </div>
-	</form>
-      </div>
-    </div>
-    <script>
-      var fileExtentionRange = '.zip .rar .tar .pdf .doc .docx .xls .xlsx .ppt .pptx';
-      var MAX_SIZE = 30; // MB
-      
-      $(document).on('change', '.btn-file :file', function() {
-	  var input = $(this);
-	  
-	  if (navigator.appVersion.indexOf("MSIE") != -1) { // IE
-	      var label = input.val();
-	      
-	      input.trigger('fileselect', [ 1, label, 0 ]);
-	  } else {
-	      var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-	      var numFiles = input.get(0).files ? input.get(0).files.length : 1;
-	      var size = input.get(0).files[0].size;
-	      
-	      input.trigger('fileselect', [ numFiles, label, size ]);
-	  }
-      });
-      
-      $('.btn-file :file').on('fileselect', function(event, numFiles, label, size) {
-	  $('#attachmentName').attr('name', 'attachment'); // allow upload.
-	  
-	  var postfix = label.substr(label.lastIndexOf('.'));
-	  if (fileExtentionRange.indexOf(postfix.toLowerCase()) > -1) {
-	      if (size > 1024 * 1024 * MAX_SIZE ) {
-		  alert('max size：<strong>' + MAX_SIZE + '</strong> MB.');
-		  
-		  $('#attachmentName').removeAttr('name'); // cancel upload file.
-	      } else {
-		  $('#_attachmentName').val(label);
-	      }
-	  } else {
-	      alert('file type：<br/> <strong>' + fileExtentionRange + '</strong>');
-	      
-	      $('#attachmentName').removeAttr('name'); // cancel upload file.
-	  }
-      });
-    </script>
-    <div class="three wide column">
-      <div class="ui vertical blue menu fluid">
-	<a class="item header">Notices Filter  </a>
-	<a class="item" href="/notices/"><i class="Announcement icon"></i> All Notices</a>
-	<a class="item" href="/notices/E4/"><i class="Announcement icon"></i> E4 </a>
-	<a class="item" href="/notices/E3/"><i class="Announcement icon"></i> E3 </a>
-	<a class="item" href="/notices/E2/"><i class="Announcement icon"></i> E2 </a>
-	<a class="item header">Options  </a>
-	<a class="item {% if not object.pk %}active{% endif %}" href="/notices/add/"><i class="plus icon"></i> Add Notice</a>
-	{% if object.pk %}
-	<a class="item active" href="/notices/{{ object.pk }}/update"><i class="edit icon"></i> Update</a>
-	<a class="item " href="/notices/{{ object.pk }}/delete"><i class="trash icon"></i> Delete</a>
-	{% endif %}
+{% block main %}
 
+<h5 class="ui dividing header"> <i class="announcement icon"></i> Notice &raquo; {% if not object.pk %} Add New {% else %} Update Notice #{{ object.pk }} {% endif %}</h5>
+{% if form.errors %}
+{% for error in form.errors %}
+<div class="ui error message">{{ error.title }} is missing </div>
+{% endfor %}
+{% endif %}
+
+<form method="post" action="" enctype="multipart/form-data">
+  {% csrf_token %}
+  <script type="text/javascript">
+    $(document).ready(function(){
+	$('select').dropdown() ; 
+    });
+  </script>
+  <div class="ui form">
+    <div class="two fields">
+      
+      <div class="field">
+	<label>Title</label>
+	{{ form.title }}
+      </div>
+      <div class="field">
+	<label>To / Receiver</label>
+	<div class="ui selection fluid">
+	  {{ form.receiver }}
+	</div>
 	
       </div>
     </div>
+    <div class="field">
+      <label>Message</label>
+      {{ form.body }}
+    </div>
     
+    <div class="field">
+      <label>Attachment</label>
+      <div class="ui action input">
+	<input type="text" id="_attachmentName">
+	<label for="attachmentName" class="ui icon button btn-file">
+	  <i class="attachment basic icon attach"></i>
+	  <!--<input type="file" id="attachmentName" name="attachment" style="display: none">-->
+	  {{ form.attachment }}
+	</label>
+      </div>
+    </div> 
+    
+    <div class="field">
+      <button type="submit" class="ui small button blue"> {% if not object.pk %} <i class="icon plus"></i> Add New {% else %} <i class="icon Checkmark"> </i>Update Notice {% endif %} </button>	      
+    </div>
   </div>
-</div>
+</form>
 
+<script>
+    var fileExtentionRange = '.zip .rar .tar .pdf .doc .docx .xls .xlsx .ppt .pptx';
+  var MAX_SIZE = 30; // MB
+  
+  $(document).on('change', '.btn-file :file', function() {
+      var input = $(this);
+      
+      if (navigator.appVersion.indexOf("MSIE") != -1) { // IE
+	  var label = input.val();
+	  
+	  input.trigger('fileselect', [ 1, label, 0 ]);
+      } else {
+	  var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+	  var numFiles = input.get(0).files ? input.get(0).files.length : 1;
+	  var size = input.get(0).files[0].size;
+	  
+	  input.trigger('fileselect', [ numFiles, label, size ]);
+      }
+  });
+  
+  $('.btn-file :file').on('fileselect', function(event, numFiles, label, size) {
+      $('#attachmentName').attr('name', 'attachment'); // allow upload.
+      
+      var postfix = label.substr(label.lastIndexOf('.'));
+      if (fileExtentionRange.indexOf(postfix.toLowerCase()) > -1) {
+	  if (size > 1024 * 1024 * MAX_SIZE ) {
+	      alert('max size：<strong>' + MAX_SIZE + '</strong> MB.');
+	      
+	      $('#attachmentName').removeAttr('name'); // cancel upload file.
+	  } else {
+	      $('#_attachmentName').val(label);
+	  }
+      } else {
+	  alert('file type：<br/> <strong>' + fileExtentionRange + '</strong>');
+	  
+	  $('#attachmentName').removeAttr('name'); // cancel upload file.
+      }
+  });
+</script>
+
+{% endblock %}
+{% block filter %}
+<a class="item" href="/notices/"><i class="Announcement icon"></i> All Notices</a>
+<a class="item" href="/notices/E4/"><i class="Announcement icon"></i> E4 </a>
+<a class="item" href="/notices/E3/"><i class="Announcement icon"></i> E3 </a>
+<a class="item" href="/notices/E2/"><i class="Announcement icon"></i> E2 </a>
+{% endblock %}
+
+{% block options %}
+<a class="item {% if not object.pk %}active{% endif %}" href="/notices/add/"><i class="plus icon"></i> Add Notice</a>
+{% if object.pk %}
+<a class="item active" href="/notices/{{ object.pk }}/update"><i class="edit icon"></i> Update</a>
+<a class="item " href="/notices/{{ object.pk }}/delete"><i class="trash icon"></i> Delete</a>
+{% endif %}
 {% endblock %}
