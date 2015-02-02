@@ -16,6 +16,9 @@ active
       <div class="ui segment blue">
 	<h5 class="ui dividing header"> <i class="announcement icon"></i> Notice &raquo; {{ object.title }}</h5>
 	<p style="min-height:92px;"> <b> Message : </b> &nbsp; {{ object.body }}</p>
+	{% if object.attachment  %}
+	<div class="ui button blue"><a href="{{ MEDIA_URL }}{{ object.attachment }}" style="color:white;"><i class="icon download"></i> Attachment </a></div><br><br>
+	{% endif %}
 	<span style="font-size:12px;"> Sent by <i><b>{{ object.sender }}</b></i> to <b><i>{{ object.receiver }} Students</i></b> at <i>{{ object.sentat}}</i> </span>
       </div>
     </div>

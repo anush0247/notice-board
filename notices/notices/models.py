@@ -14,6 +14,7 @@ class Notices(models.Model):
     sentat = models.DateTimeField(auto_now_add=True)
     body = models.TextField(blank=True)
     receiver = models.CharField(max_length=3,choices=receiver)
+    attachment = models.FileField(upload_to='notice_attachments/', blank=True, null=True)
     
     def __unicode__(self):
         return self.title

@@ -19,7 +19,7 @@ active
 	  {% endfor %}
 	{% endif %}
 	  
-	<form method="post" action="">
+	<form method="post" action="" enctype="multipart/form-data">
 	  {% csrf_token %}
 	  <script type="text/javascript">
     	    $(document).ready(function(){
@@ -44,8 +44,20 @@ active
 	    <div class="field">
 	      <label>Message</label>
 	      {{ form.body }}
-	      
 	    </div>
+	    
+	    <div class="field">
+	      <label>Attachment</label>
+	      <div class="ui action input">
+		<input type="text" id="_attachmentName">
+		<label for="attachmentName" class="ui icon button btn-file">
+		  <i class="attachment basic icon attach"></i>
+		  <!--<input type="file" id="attachmentName" name="attachment" style="display: none">-->
+		  {{ form.attachment }}
+		</label>
+	      </div>
+	    </div> 
+	    
 	    <div class="field">
 	      <button type="submit" class="ui small button blue"><i class="icon plus"></i> Add Notice</button>	      
 	    </div>
@@ -53,6 +65,45 @@ active
 	</form>
       </div>
     </div>
+    <script>
+      var fileExtentionRange = '.zip .rar .tar .pdf .doc .docx .xls .xlsx .ppt .pptx';
+      var MAX_SIZE = 30; // MB
+      
+      $(document).on('change', '.btn-file :file', function() {
+	  var input = $(this);
+	  
+	  if (navigator.appVersion.indexOf("MSIE") != -1) { // IE
+	      var label = input.val();
+	      
+	      input.trigger('fileselect', [ 1, label, 0 ]);
+	  } else {
+	      var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+	      var numFiles = input.get(0).files ? input.get(0).files.length : 1;
+	      var size = input.get(0).files[0].size;
+	      
+	      input.trigger('fileselect', [ numFiles, label, size ]);
+	  }
+      });
+      
+      $('.btn-file :file').on('fileselect', function(event, numFiles, label, size) {
+	  $('#attachmentName').attr('name', 'attachment'); // allow upload.
+	  
+	  var postfix = label.substr(label.lastIndexOf('.'));
+	  if (fileExtentionRange.indexOf(postfix.toLowerCase()) > -1) {
+	      if (size > 1024 * 1024 * MAX_SIZE ) {
+		  alert('max size：<strong>' + MAX_SIZE + '</strong> MB.');
+		  
+		  $('#attachmentName').removeAttr('name'); // cancel upload file.
+	      } else {
+		  $('#_attachmentName').val(label);
+	      }
+	  } else {
+	      alert('file type：<br/> <strong>' + fileExtentionRange + '</strong>');
+	      
+	      $('#attachmentName').removeAttr('name'); // cancel upload file.
+	  }
+      });
+    </script>
     <div class="three wide column">
       <div class="ui vertical blue menu fluid">
 	<a class="item header">Notices Filter  </a>
