@@ -20,7 +20,6 @@ urlpatterns = patterns('',
     url(r"^notices/(?P<action>(add))/$", auth(AddNotice.as_view()), name="notice_add"),
     url(r"^notices/(?P<pk>\d+)/(?P<action>update)/$", auth(UpdateNotice.as_view()), name="notice_update"),
     url(r"^notices/(?P<pk>\d+)/(?P<action>delete)/$", auth(DelNotice.as_view()), name="notice_delete"),
-
     url(r"^login/$", "django.contrib.auth.views.login", {"template_name": "login.html"}, name="login"),
     url(r"^logout/$", "django.contrib.auth.views.logout_then_login", name="logout"),
 )

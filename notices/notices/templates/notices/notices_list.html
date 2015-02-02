@@ -7,6 +7,12 @@ active
 <div class="ui grid">
   <div class="row">
     <div class="thirteen wide column">
+      {% if messages %}
+      {% for message in messages %}
+      <div {% if message.tags %} class="ui message {{ message.tags }}"{% endif %}>{{ message }}</div>
+      {% endfor %}
+      {% endif %}
+      
       <div class="ui segment blue">
 	<h5 class="ui header"> <i class="announcement icon"></i> All Notices </h5>
 	{% if object_list.count %}

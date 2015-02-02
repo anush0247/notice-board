@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse, reverse_lazy
 from .models import Notices
 from .forms import NoticeForm
@@ -45,10 +45,15 @@ class AddNotice(CreateView):
         
 class DelNotice(DeleteView):
     model = Notices
-    #messages.warning(self.request, "Notice Deleted Successfully")
-    success_url = reverse_lazy("notices")
+    
+    def get_success_url(self):
+        messages.warning(self.request,'Notice #'+str(self.object.pk)+' deleted successfully')
+        return reverse('notices')
 
 class UpdateNotice(UpdateView):
     model = Notices
     form_class = NoticeForm
-    success_url = reverse_lazy("notices")
+
+    def get_success_url(self):
+        messages.success(self.request,'Notice #'+str(self.object.pk)+' updated successfully')
+        return reverse('notice_detail', kwargs={'pk':self.object.pk})
