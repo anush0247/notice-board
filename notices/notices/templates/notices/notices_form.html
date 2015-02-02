@@ -59,7 +59,7 @@ active
 	    </div> 
 	    
 	    <div class="field">
-	      <button type="submit" class="ui small button blue"><i class="icon plus"></i> Add Notice</button>	      
+	      <button type="submit" class="ui small button blue"> {% if not object.pk %} <i class="icon plus"></i> Add New {% else %} <i class="icon Checkmark"> </i>Update Notice {% endif %} </button>	      
 	    </div>
 	  </div>
 	</form>
