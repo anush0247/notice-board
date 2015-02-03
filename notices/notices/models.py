@@ -19,25 +19,6 @@ class Notices(models.Model):
     def __unicode__(self):
         return self.title
         
-        
-#class Roles(models.Model):
-#    title = models.CharField(max_length=20)
- #   members = models.ManyToManyField(User)
-#
- #   def __unicode__(self):
-  #      return self.title
-
-#class RoleMaping(models.Model):
- #   user = models.ForeignKey(User)
-  #  
-   # roles = models.ForeignKey(Roles)
-#
- #   def __unicode__(self):
-  #      return "%s is %s" %(self.user, self.roles)
-#
-#class RolePermissions(models.Model):
- #   name = models.CharField(max_length=50)
-  #  roles = models.ManyToManyField(Roles)
 
 class RolePermissions(models.Model):
     title = models.CharField(max_length=20, unique=True)
@@ -48,7 +29,6 @@ class RolePermissions(models.Model):
   
 class Roles(models.Model):
     title = models.CharField(max_length=20, unique=True)
-    #members = models.ManyToManyField(User)
     permissions = models.ManyToManyField(RolePermissions)
 
     def __unicode__(self):
