@@ -12,7 +12,7 @@ from .views import UpdateNotice
 from .views import DelNotice
 
 urlpatterns = patterns('',
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^dj-admin/', include(admin.site.urls)),
     url(r'^$', auth(HomePageView), name="home"),
     url(r'^notices/$', auth(NoticesView.as_view()), name="notices"),
     url(r'^notices/(E[234]){1}/$', auth(NoticesView.as_view()), name="notices_year"),
