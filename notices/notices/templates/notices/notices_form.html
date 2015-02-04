@@ -6,7 +6,7 @@
 <h5 class="ui dividing header"> <i class="announcement icon"></i> Notice &raquo; {% if not object.pk %} Add New {% else %} Update Notice #{{ object.pk }} {% endif %}</h5>
 {% if form.errors %}
 {% for error in form.errors %}
-<div class="ui error message">{{ error.title }} is missing </div>
+<div class="ui error message"> <i class="close icon"></i> {{ error.title }} is missing </div>
 {% endfor %}
 {% endif %}
 

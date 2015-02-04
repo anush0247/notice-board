@@ -7,10 +7,17 @@ active
 <div class="ui grid">
   <div class="row">
     <div class="thirteen wide column">
-
+      <script>
+    	$(document).ready(function(){
+	    $('.message .close').on('click', function() {
+		$(this).closest('.message').fadeOut();
+	    });
+	});
+    	
+      </script>
       {% if messages %}
       {% for message in messages %}
-      <div {% if message.tags %} class="ui message {{ message.tags }}"{% endif %}>{{ message }}</div>
+      <div {% if message.tags %} class="ui message {{ message.tags }}"{% endif %}><i class="close icon"></i>{{ message }}</div>
       {% endfor %}
       {% endif %}
       
