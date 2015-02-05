@@ -1,10 +1,10 @@
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse, reverse_lazy
-from .models import Notices
+from .models import Notices, Profile
 from .forms import NoticeForm
 from django.contrib import messages
-
+from django.contrib.auth import get_user_model
 
 def HomePageView(request):
     return render(request, "home.html")
@@ -27,10 +27,20 @@ class NoticesView(ListView):
             context['year'] = "All"
         return context
 
-    
+class UserProfileDetailView(DetailView):
+    model = get_user_model()
+    slug_field = "username"
+    template_name = "user_profile.html"
+
+    def get_object(self, queryset=None):
+        user = super(UserProfileDetailView, self).get_object(queryset)
+        Profile.objects.get_or_create(user=user)
+        return user
+        
 class OneNoticeView(DetailView):
     model = Notices
 
+    
 class AddNotice(CreateView):
     model = Notices
     form_class = NoticeForm

@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required as auth
 from django.contrib import admin
 
-from .views import NoticesView, OneNoticeView, HomePageView, AddNotice, UpdateNotice, DelNotice
+from .views import NoticesView, OneNoticeView, HomePageView, AddNotice, UpdateNotice, DelNotice, UserProfileDetailView
 from .api import UserViewSet, ProfileViewSet, RoleViewSet, RolePermissionsViewSet
 from rest_framework import routers
 
@@ -28,6 +28,7 @@ urlpatterns = patterns('',
     url(r"^logout/$", "django.contrib.auth.views.logout_then_login", name="logout"),
     url(r'^api-auth/',include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/',include(router.urls)),
+    url(r"^users/(?P<slug>[\w .]+)/$", UserProfileDetailView.as_view(), name="profile"),
 )
 
 if settings.DEBUG:

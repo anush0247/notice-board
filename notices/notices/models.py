@@ -36,9 +36,8 @@ class Roles(models.Model):
                 
 class Profile(models.Model):
     name = models.CharField(max_length=100)
-    user = models.ForeignKey(User, unique=True)
+    user = models.OneToOneField(User, unique=True)
     roles = models.ManyToManyField(Roles)
 
     def __unicode__(self):
-        return self.name
-    
+        return self.user
