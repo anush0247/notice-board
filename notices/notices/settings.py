@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'notices',
     'rest_framework',
+	'admin_import'
 )
 
 REST_FRAMEWORK = {
