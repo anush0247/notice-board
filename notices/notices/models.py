@@ -40,4 +40,4 @@ class Profile(models.Model):
     roles = models.ManyToManyField(Roles)
 
     def __unicode__(self):
-        return self.user
+        return self.user.username
