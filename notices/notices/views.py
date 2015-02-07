@@ -6,7 +6,12 @@ from .forms import NoticeForm
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from oauth2_provider.views.generic import ProtectedResourceView
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 
+@login_required()
+def secret_page(request, *args, **kwargs):
+    return HttpResponse('Secret contents!', status=200)
 
 class ApiEndpoint(ProtectedResourceView):
     def get(self, request, *args, **kwargs):

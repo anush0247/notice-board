@@ -4,13 +4,14 @@ from django.contrib.auth.decorators import login_required as auth
 from django.contrib import admin
 
 from .views import NoticesView, OneNoticeView, HomePageView, AddNotice, UpdateNotice, DelNotice, UserProfileDetailView
-from .api import UserViewSet, ProfileViewSet, RoleViewSet, RolePermissionsViewSet
+from .api import UserViewSet, ProfileViewSet, RoleViewSet, RolePermissionsViewSet, GroupViewSet
 from rest_framework import routers
 
 from .views import ApiEndpoint
 admin.autodiscover()
 
 router = routers.DefaultRouter()
+router.register(r'groups', GroupViewSet, base_name="")
 router.register(r'users', UserViewSet)
 router.register(r'profile', ProfileViewSet)
 router.register(r'roles', RoleViewSet)                                        
@@ -32,6 +33,7 @@ urlpatterns = patterns('',
     url(r"^users/(?P<slug>[\w .]+)/$", UserProfileDetailView.as_view(), name="profile"),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'^api/hello', ApiEndpoint.as_view()),
+    url(r'^secret$', 'notices.views.secret_page', name='secret'),
 )
 
 if settings.DEBUG:
