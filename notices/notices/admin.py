@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.models  import User
 from .models import Notices, Profile, Roles, RolePermissions
 
 #class NoticesAdmin(admin.ModelAdmin):
@@ -25,15 +26,12 @@ class RoleResource(resources.ModelResource):
         model = Roles
         
 class RoleAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    #list_display = ('title',)
+    list_display = ('title',)
+    filter_horizontal = ('permissions',)
     resource_class = RoleResource
     pass
     
 admin.site.register(Roles, RoleAdmin)
-
-
-def abc(resource=None):
-    return
         
 class ProfileResource(resources.ModelResource):
     
@@ -43,6 +41,7 @@ class ProfileResource(resources.ModelResource):
         
 class ProfileAdmin(ImportExportModelAdmin):
     list_display = ('name','user')
+    filter_horizontal = ('roles',)
     resource_class = ProfileResource
     pass
 
@@ -57,3 +56,19 @@ class RolePermissionsAdmin(ImportExportModelAdmin):
     pass
     
 admin.site.register(RolePermissions, RolePermissionsAdmin)
+
+admin.site.unregister(User)
+
+class UserResource(resources.ModelResource):
+    
+    class Meta:
+        model = User
+
+        
+class UserAdmin(ImportExportModelAdmin):
+    list_display = ('username','first_name','last_name','email','last_login','date_joined','is_active','is_staff')
+    filter_horizontal = ('groups','user_permissions')
+    resource_class = UserResource
+    pass
+
+admin.site.register(User, UserAdmin)
