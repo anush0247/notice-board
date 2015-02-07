@@ -5,7 +5,13 @@ from .models import Notices, Profile
 from .forms import NoticeForm
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from oauth2_provider.views.generic import ProtectedResourceView
 
+
+class ApiEndpoint(ProtectedResourceView):
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('Hello, OAuth2!')
+        
 def HomePageView(request):
     return render(request, "home.html")
     

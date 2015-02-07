@@ -7,6 +7,7 @@ from .views import NoticesView, OneNoticeView, HomePageView, AddNotice, UpdateNo
 from .api import UserViewSet, ProfileViewSet, RoleViewSet, RolePermissionsViewSet
 from rest_framework import routers
 
+from .views import ApiEndpoint
 admin.autodiscover()
 
 router = routers.DefaultRouter()
@@ -29,6 +30,8 @@ urlpatterns = patterns('',
     url(r'^api-auth/',include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/',include(router.urls)),
     url(r"^users/(?P<slug>[\w .]+)/$", UserProfileDetailView.as_view(), name="profile"),
+    url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    url(r'^api/hello', ApiEndpoint.as_view()),
 )
 
 if settings.DEBUG:
