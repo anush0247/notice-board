@@ -1,4 +1,5 @@
-from django.db import models
+B1;3409;0cfrom django.db import models
+from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 
 class Notices(models.Model):
@@ -35,10 +36,30 @@ class Roles(models.Model):
         return self.title
                 
 class Profile(models.Model):
+    
+    gender_labels = (
+        ("M", "Male"),
+        ("F", "Female"),
+    )
+    
     name = models.CharField(max_length=100)
     user = models.OneToOneField(User, unique=True)
     roles = models.ManyToManyField(Roles)
+    gender = models.CharField(max_length=1,choices=gender_labels)
+    dob = models.DateTimeField(null=True)
+    phone_regex = RegexValidator(regex=r'^\d{11}$', message="Mobile No format error")
+    mobile = models.CharField(max_length=11,validators=[phone_regex],null=True)
+    
+    department_labels = (
+        ("CSE", "Computer Science and Engineering"),
+        ("MME", "Metiral and Matalurgical Engineering"),
+        ("CE", "Civil Engineering"),
+    )
+    
+    department = models.CharField(max_length=3,choices=department_labels)
+    
 
+    
     def __unicode__(self):
         return self.user.username
 
