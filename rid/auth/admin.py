@@ -59,20 +59,22 @@ class UserAdmin(UserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('rid','first_name','last_name','gender','email', 'date_of_birth','dept','is_student', 'is_admin')
-    list_filter = ('dept','gender','is_admin','is_student','is_alumini',)
+    list_display = ('rid','first_name','gender','email', 'date_of_birth','dept','year','is_student', 'is_admin')
+    list_filter = ('dept','gender','year')
     fieldsets = (
-        (None, {'fields': ('rid', 'password')}),
-        ('Personal info', {'fields': ('first_name','last_name','profile_pic','email','mobile','date_of_birth','gender','dept','batch','year')}),
+        ('User Info', {'fields': ('rid','first_name','last_name', 'password')}),
+        ('Personal info', {'fields': ('profile_pic','email','mobile','date_of_birth','gender')}),
+        ('University Info',{'fields': ('dept','batch','year')}),
         ('Permissions', {'fields': ('is_admin','is_student','is_alumini')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
+    
     add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('rid','first_name','last_name','email','gender','dept','year','date_of_birth', 'password1', 'password2')}
-        ),
+        ('User Info', {'fields': ('rid','first_name','password1','password2')}),
+        ('Personal info', {'fields': ('email','date_of_birth','gender')}),
+        ('University Info',{'fields': ('dept','year')}),
+        ('Permissions', {'fields': ('is_admin','is_student')}),
     )
     search_fields = ('email','rid','first_name','last_name')
     ordering = ('rid','email',)
