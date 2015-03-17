@@ -67,7 +67,8 @@ class RUser(AbstractBaseUser):
     last_name = models.CharField(
         max_length=100,
         verbose_name = "Last Name",
-        null=True
+        null=True,
+        default="",
     )
 
     email = models.EmailField(
@@ -112,15 +113,20 @@ class RUser(AbstractBaseUser):
     )
     
     department_labels = (
-        ("CSE", "Computer Science and Engineering"),
-        ("MME", "Metiral and Matalurgical Engineering"),
-        ("CE", "Civil Engineering"),
+        ("CSE", "Computer Science"),
+        ("MME", "Metrial & Matlurgical"),
+        ("CE", "Civil"),
+        ("CHE", "Chemical"),
+        ("ECE", "Electronics & Comm"),
+        ("ME", "Mechanical"),
+        ("NA", "Not Applicable")
     )
     
     dept = models.CharField(
         max_length=3,
         choices=department_labels,
-        verbose_name="Department Name"
+        verbose_name="Dept. Name",
+        default="NA",
     )
 
     batch_labels = (
@@ -128,12 +134,16 @@ class RUser(AbstractBaseUser):
         ("E3", "Engg Third Year"),
         ("E2", "Engg Second Year"),
         ("E1", "Engg First Year"),
+        ("P1", "PUC First Year"),
+        ("P2", "PUC Second Year"),
+        ("NA", "Not Aplicable")
     )
 
     batch = models.CharField(
         max_length=2,
         choices=batch_labels,
         verbose_name="Batch",
+        default="NA",
     )
 
     year = models.IntegerField(
