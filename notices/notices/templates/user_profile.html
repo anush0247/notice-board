@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <h3>{{ object.username }}'s Profile</h3>
-
-{{ object.roles }}
+{% for obj in object.profile.roles.all %}
+{{ obj }}
+{% endfor %}
 {% endblock %}

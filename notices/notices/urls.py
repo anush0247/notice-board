@@ -19,6 +19,7 @@ router.register(r'permissions', RolePermissionsViewSet)
 
 urlpatterns = patterns('',
     url(r'^dj-admin/', include(admin.site.urls)),
+    url(r'^dj-admin/docs/', include("django.contrib.admindocs.urls")),
     url(r'^$', auth(HomePageView), name="home"),
     url(r'^notices/$', auth(NoticesView.as_view()), name="notices"),
     url(r'^notices/(E[234]){1}/$', auth(NoticesView.as_view()), name="notices_year"),
