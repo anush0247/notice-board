@@ -5,10 +5,11 @@ from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
+# importing home page view
+from rid.views import HomePageView
+
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'rid.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
+	url(r'^$', HomePageView, name="home"),
 	url(r'^auth/', include('auth.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
