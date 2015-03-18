@@ -1,0 +1,55 @@
+{% extends "notices_base.html" %}
+{% block title %}
+Notice Board
+{% endblock %}
+{% block main %}
+<h5 class="ui header"> <i class="announcement icon"></i> {{ year }} Notices </h5>
+{% if object_list.count %}
+<table class="ui basic striped table celled" width="100%">
+  <thead>
+    <tr>
+      <th class="center aligned">ID</th>
+      <th class="center aligned">Title</th>
+      <th class="center aligned">To</th>
+      <th class="center aligned">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for notice in object_list  %}
+    <tr>
+      <td class="center aligned" width="5%">{{ notice.id }}</td>
+      <td ><a href="{% url 'notice_detail' pk=notice.id %}">{{ notice.title }}</td>
+      <td class="center aligned" width="5%">{{ notice.receiver }}</td>
+      <td class="center aligned" width="12%">{{ notice.sentat|date:"M j, Y" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<!--<a class="ui blue tag label" style="float:right">Page 10</a>-->
+{% if is_paginated %}
+<div class="ui pagination menu" style="float:left">
+  {% if page_obj.has_previous %}
+  <a class="item" href="?page={{ page_obj.previous_page_number}}"> <i class="left arrow icon"></i></a>
+  {% endif %}
+  <a class="item">Page {{ page_obj.number }} of {{ paginator.num_pages }}</a>
+  {% if page_obj.has_next %}
+  <a class="item" href="?page={{ page_obj.next_page_number}}"> <i class="right arrow icon"></i> </a>
+  {% endif %}
+</div>
+{% endif %}
+
+{% else %}
+<div class="ui ignored warning message">
+  No Notices to display
+</div>
+{% endif %}
+{% endblock %}
+{% block filter %}
+<a class="item {% ifequal year 'All' %}active{% endifequal %}" href="/notices/"><i class="Announcement icon"></i> All Notices</a>
+<a class="item {% ifequal year 'E4' %}active{% endifequal %}" href="/notices/E4/"><i class="Announcement icon"></i> E4 </a>
+<a class="item {% ifequal year 'E3' %}active{% endifequal %}" href="/notices/E3/"><i class="Announcement icon"></i> E3 </a>
+<a class="item {% ifequal year 'E2' %}active{% endifequal %}" href="/notices/E2/"><i class="Announcement icon"></i> E2 </a>	
+{% endblock %}
+{% block options %}
+<a class="item" href="/notices/add/"><i class="plus icon"></i> Add Notice</a>
+{% endblock %}
