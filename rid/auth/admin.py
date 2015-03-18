@@ -43,7 +43,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = RUser
-        fields = ('rid','first_name','last_name','date_of_birth','gender','email','profile_pic','mobile','dept','batch','year','is_active', 'is_admin','is_student','is_alumini')
+        fields = ('rid','first_name','last_name','date_of_birth','gender','email','profile_pic','mobile','dept','batch','year','is_active', 'is_admin')
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
         # This is done here, rather than on the field, because the
@@ -59,22 +59,25 @@ class UserAdmin(UserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('rid','first_name','gender','email', 'date_of_birth','dept','year','is_student', 'is_admin')
+    list_display = ('rid','first_name','gender','email', 'date_of_birth','dept','batch','year','is_admin')
     list_filter = ('dept','gender','year')
     fieldsets = (
-        ('User Info', {'fields': ('rid','first_name','last_name', 'password')}),
-        ('Personal info', {'fields': ('profile_pic','email','mobile','date_of_birth','gender')}),
+        ('User Info', {'fields': ('rid','first_name','last_name')}),
+        ('Security',{'fields': ('password',)}),
+        ('Basic Personal Info', {'fields': ('email','date_of_birth','gender')}),
+        ('Additional Info',{'fields':('profile_pic','mobile',)}),
         ('University Info',{'fields': ('dept','batch','year')}),
-        ('Permissions', {'fields': ('is_admin','is_student','is_alumini')}),
+        ('Permissions', {'fields': ('is_admin',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
     
     add_fieldsets = (
-        ('User Info', {'fields': ('rid','first_name','password1','password2')}),
-        ('Personal info', {'fields': ('email','date_of_birth','gender')}),
-        ('University Info',{'fields': ('dept','year')}),
-        ('Permissions', {'fields': ('is_admin','is_student')}),
+        ('User Info', {'fields': ('rid','first_name','last_name',)}),
+        ('Security',{'fields': ('password1','password2')}),
+        ('Basic Personal Info', {'fields': ('email','date_of_birth','gender')}),
+        ('University Info',{'fields': ('dept','batch','year')}),
+        ('Permissions', {'fields': ('is_admin',)}),
     )
     search_fields = ('email','rid','first_name','last_name')
     ordering = ('rid','email',)

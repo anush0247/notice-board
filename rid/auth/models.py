@@ -5,7 +5,7 @@ from django.contrib.auth.models import (
 from django.core.validators import RegexValidator
 
 class UserManager(BaseUserManager):
-    def create_user(self, rid, email, date_of_birth, gender, first_name, dept, year, password=None):
+    def create_user(self, rid, email, date_of_birth, gender, first_name,last_name, dept,batch, year, password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -15,6 +15,10 @@ class UserManager(BaseUserManager):
 
         if not first_name:
             raise ValueError('Users must have a first name')
+
+        if not year:
+            raise ValueError('Users must have a valid year')
+        
             
         user = self.model(
             rid = rid,
@@ -22,7 +26,9 @@ class UserManager(BaseUserManager):
             date_of_birth = date_of_birth,
             gender = gender,
             first_name = first_name,
+            last_name = last_name,
             dept = dept,
+            batch = batch,
             year = year,
         )
 
@@ -30,7 +36,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, rid, email, date_of_birth, gender, first_name, dept, year, password):
+    def create_superuser(self, rid, email, date_of_birth, gender, first_name, last_name, dept, batch, year, password):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
@@ -42,7 +48,9 @@ class UserManager(BaseUserManager):
             date_of_birth=date_of_birth,
             gender = gender,
             first_name = first_name,
+            last_name = last_name,
             dept = dept,
+            batch = batch,
             year = year,
         )
         
@@ -115,11 +123,19 @@ class RUser(AbstractBaseUser):
     department_labels = (
         ("CSE", "Computer Science"),
         ("MME", "Metrial & Matlurgical"),
-        ("CE", "Civil"),
+        ("CE",  "Civil"),
         ("CHE", "Chemical"),
         ("ECE", "Electronics & Comm"),
-        ("ME", "Mechanical"),
-        ("NA", "Not Applicable")
+        ("ME",  "Mechanical"),
+        ("MNG", "Management"),
+        ("MAT", "Maths"),
+        ("PHY", "Physics"),
+        ("CH",  "Chemistry"),
+        ("BIO", "Biology"),
+        ("LBA", "Libaral Arts"),
+        ("IT",  "Information Technolgoy"),
+        ("ADM", "Administration"),
+        ("NA",  "Not Applicable")
     )
     
     dept = models.CharField(
@@ -136,6 +152,11 @@ class RUser(AbstractBaseUser):
         ("E1", "Engg First Year"),
         ("P1", "PUC First Year"),
         ("P2", "PUC Second Year"),
+        ("MT", "Mentor"),
+        ("FA", "Faculty"),
+        ("ST", "Office Staff"),
+        ("LA", "Lab Assistant"),
+        ("AL", "Alumini"),
         ("NA", "Not Aplicable")
     )
 
@@ -161,20 +182,11 @@ class RUser(AbstractBaseUser):
         verbose_name = "Is Admin",
     )
     
-    is_student = models.BooleanField(
-        default=True,
-        verbose_name = "Is Student",
-    )
-    
-    is_alumini = models.BooleanField(
-        default=False,
-        verbose_name = "Is Alumini",
-    )
     
     objects = UserManager()
 
     USERNAME_FIELD = 'rid'
-    REQUIRED_FIELDS = ['date_of_birth','gender','email','first_name','dept','year']
+    REQUIRED_FIELDS = ['first_name','last_name','date_of_birth','gender','email','dept','year','batch']
 
     def get_full_name(self):
         return "%s %s" %(self.first_name, self.last_name)
