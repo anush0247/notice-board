@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<h3>{{ object.username }}'s Profile</h3>
-
-{{ object.roles }}
+<div class="ui segment blue" style="padding:2%;min-height:200px;">
+  <h3 class="ui header">{{ object.get_full_name }}'s Profile</h3>
+  
+</div>
 {% endblock %}
