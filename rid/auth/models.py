@@ -146,12 +146,12 @@ class RUser(AbstractBaseUser):
     )
 
     batch_labels = (
-        ("E4", "Engg Final Year"),
-        ("E3", "Engg Third Year"),
-        ("E2", "Engg Second Year"),
-        ("E1", "Engg First Year"),
-        ("P1", "PUC First Year"),
-        ("P2", "PUC Second Year"),
+        ("E4", "Final Year, Engg"),
+        ("E3", "Third Year, Engg"),
+        ("E2", "Second Year, Engg"),
+        ("E1", "First Year, Engg"),
+        ("P1", "First Year, PUC"),
+        ("P2", "Second Year, PUC"),
         ("MT", "Mentor"),
         ("FA", "Faculty"),
         ("ST", "Office Staff"),

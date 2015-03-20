@@ -1,7 +1,81 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="ui segment blue" style="padding:2%;min-height:200px;">
-  <h3 class="ui header">{{ object.get_full_name }}'s Profile</h3>
-  
+<!--<div class="ui segment blue" style="padding:2%;min-height:200px;">-->
+ 
+  <div class="ui grid">
+    <div class="four wide column">
+      <div class="ui segment blue">
+	
+	<img src="/media/{{ object.profile_pic }}" class="ui roundedx image">
+	<p>
+	  
+	  <div class="ui divided list">
+	    <div class="item">
+	      <i class="icon {{object.get_gender_display}}"></i>
+	      <div class="content">
+		<div class="header"> {{ object.get_full_name }}</div>
+	      </div>
+	    </div>
+	    <div class="item">
+	      <i class="icon user"></i>
+	      <div class="content">
+		<div class="header"> {{ object.rid }}</div>
+	      </div>
+	    </div>
+	    <div class="item">
+	      <i class="icon calendar"></i>
+	      <div class="content">
+		<div class="header"> Born on {{ object.date_of_birth }}</div>
+	      </div>
+	    </div>
+	    <div class="item">
+	      <i class="mail icon"></i>
+	      <div class="content">
+		<div class="header"><a href="mailto:{{object.email}}">{{ object.email }}</a></div>
+	      </div>
+	    </div>
+	    <div class="item">
+	      <i class="call icon"></i>
+	      <div class="content">
+		<div class="header">{{ object.mobile }}</div>
+	      </div>
+	    </div>
+	 </p>
+	</div>
+      </div>
+    </div>
+    <div class="twelve wide column">
+      <div class="ui grid">
+
+	<div class="sixteen wide column">
+	  <div class="ui segment">
+	    <div class="ui top attached label">University Info</div>  
+	    <div class="ui divided list">
+	      <div class="item">
+		<i class="icon University "></i>
+		<div class="content">
+		  <div class="header">Dept. of  {{ object.get_dept_display }}</div>
+		</div>
+	      </div>
+	      <div class="item">
+		<i class="calendar icon"></i>
+		<div class="content">
+		  <div class="header">Year of {{ object.year }}</div>
+		</div>
+	      </div>
+	      <div class="item">
+		<i class=" icon Student"></i>
+		<div class="content">
+		  <div class="header">{{ object.get_batch_display }}</div>
+		</div>
+	      </div>
+	    </div>
+	  </div>  
+	</div>
+
+	
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
