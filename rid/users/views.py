@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.views.generic import DetailView
-# Create your views here.
+from django.shortcuts import render
 
 class UserProfileDetailView(DetailView):
     model = get_user_model()
@@ -12,4 +12,8 @@ class UserProfileDetailView(DetailView):
         #Profile.objects.get_or_create(user=user)
         return user
 
+from auth.models import RUser
 
+def DeptView(request):
+	context = {'depts' : RUser.department_labels }
+	return render(request, "users/depts.html", context)

@@ -135,7 +135,6 @@ class RUser(AbstractBaseUser):
         ("LBA", "Libaral Arts"),
         ("IT",  "Information Technolgoy"),
         ("ADM", "Administration"),
-        ("NA",  "Not Applicable")
     )
     
     dept = models.CharField(
@@ -156,8 +155,7 @@ class RUser(AbstractBaseUser):
         ("FA", "Faculty"),
         ("ST", "Office Staff"),
         ("LA", "Lab Assistant"),
-        ("AL", "Alumini"),
-        ("NA", "Not Aplicable")
+        ("AL", "Alumini")
     )
 
     batch = models.CharField(
