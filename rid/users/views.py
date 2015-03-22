@@ -15,5 +15,9 @@ class UserProfileDetailView(DetailView):
 from auth.models import RUser
 
 def DeptView(request):
-	context = {'depts' : RUser.department_labels }
-	return render(request, "users/depts.html", context)
+    context = {'depts' : RUser.department_labels }
+    return render(request, "users/depts.html", context)
+
+def DeptDetailView(request, slug):
+    context = {'dept_name':slug}
+    return render(request, "users/dept_details.html", context)

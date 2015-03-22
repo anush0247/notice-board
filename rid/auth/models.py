@@ -125,7 +125,7 @@ class RUser(AbstractBaseUser):
         ("MME", "Metrial & Matlurgical"),
         ("CE",  "Civil"),
         ("CHE", "Chemical"),
-        ("ECE", "Electronics & Comm"),
+        ("ECE", "Electronics & Communication"),
         ("ME",  "Mechanical"),
         ("MNG", "Management"),
         ("MAT", "Maths"),
