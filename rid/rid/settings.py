@@ -110,3 +110,9 @@ from django.core.urlresolvers import reverse_lazy
 LOGIN_URL=reverse_lazy("login")
 LOGIN_REDIRECT_URL=reverse_lazy("home")
 LOGOUT_URL=reverse_lazy("logout")
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'users.context_processors.get_dept_names',
+    "django.contrib.messages.context_processors.messages",
+)

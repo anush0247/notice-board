@@ -19,5 +19,4 @@ def DeptView(request):
     return render(request, "users/depts.html", context)
 
 def DeptDetailView(request, slug):
-    context = {'dept_name':slug}
-    return render(request, "users/dept_details.html", context)
+    return render(request, "users/dept_details.html")

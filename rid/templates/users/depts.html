@@ -6,8 +6,8 @@ All Departments
 {% block content %}
 <div class="ui segment blue" style="padding:2%;min-height:200px;">
   <h5 class="ui header"> All Departments</h5>
-  <div class="ui four cards">
-    {% for dept in depts%}
+  <div class="ui five cards">
+    {% for dept in dept_names %}
     <div class="card">
       <div class="ui top attached label">{{ dept.0}}</div>
       <div class="content">

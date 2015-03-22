@@ -25,15 +25,14 @@
       <a class="item {% block menu_home  %} {% endblock %}" href="/"><b>Online Portal <small>v2.0</small></b></a>
       <div class="right menu">
 	<a class="item {% block menu_notice  %} {% endblock %}" href="/notices/"><i class="Announcement icon"></i>Notice Board </a>
-<!--	<div class="item ui dropdown  id="dept_menu">
+	<div class="item ui dropdown"  id="dept_menu">
 		<i class="Student icon"></i> Departments <i class="icon dropdown"></i>
 		<div class="menu">
-		    <a class="item" href="/users/{{ user.rid }}"><i class="edit icon"></i> Profile</a>
-		    <a class="item" href="/auth/settings/"><i class="settings icon"></i> Settings</a>
-		    <a class="item" href="/auth/logout/"><i class="sign out icon"></i> Logout</a>	    
-		  </div>
-	</div>-->
-	<a class="item {% block menu_depts  %} {% endblock %}" href="/depts/"><i class="Student icon"></i> Departments </a>
+		  {% for dept in dept_names %}
+		  <a class="item " href="/depts/{{dept.0}}/">{{dept.1}}</a>
+		  {% endfor %}
+		</div>
+	</div>
 	<a class="item {% block menu_resources  %} {% endblock %}"><i class="file icon"></i> Resources </a>
 	<a class="item {% block menu_aboutus  %} {% endblock %}"><i class="info icon"></i> About us </a>
 	<div class="item ui dropdown {% block menu_user  %} {% endblock %}" id="user_menu">
