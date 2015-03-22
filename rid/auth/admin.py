@@ -43,7 +43,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = RUser
-        fields = ('rid','first_name','last_name','date_of_birth','gender','email','profile_pic','mobile','dept','batch','year','is_active', 'is_admin')
+        fields = ('rid','first_name','last_name','date_of_birth','gender','email','url','profile_pic','mobile','dept','batch','year','is_active', 'is_admin')
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
         # This is done here, rather than on the field, because the
@@ -64,8 +64,8 @@ class UserAdmin(UserAdmin):
     fieldsets = (
         ('User Info', {'fields': ('rid','first_name','last_name')}),
         ('Security',{'fields': ('password',)}),
-        ('Basic Personal Info', {'fields': ('email','date_of_birth','gender')}),
-        ('Additional Info',{'fields':('profile_pic','mobile',)}),
+        ('Basic Personal Info', {'fields': ('date_of_birth','gender')}),
+        ('Additional Info',{'fields':('email','profile_pic','mobile','url',)}),
         ('University Info',{'fields': ('dept','batch','year')}),
         ('Permissions', {'fields': ('is_admin',)}),
     )
@@ -75,7 +75,7 @@ class UserAdmin(UserAdmin):
     add_fieldsets = (
         ('User Info', {'fields': ('rid','first_name','last_name',)}),
         ('Security',{'fields': ('password1','password2')}),
-        ('Basic Personal Info', {'fields': ('email','date_of_birth','gender')}),
+        ('Basic Personal Info', {'fields': ('date_of_birth','gender')}),
         ('University Info',{'fields': ('dept','batch','year')}),
         ('Permissions', {'fields': ('is_admin',)}),
     )

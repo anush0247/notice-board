@@ -58,7 +58,7 @@
 	  <div class="item">
 	    <i class="mail icon"></i>
 	    <div class="content">
-	      <a href="mailto:{{object.email}}">{{ object.email }}</a>
+	      <a href="mailto:{% if object.email %} {{ object.email}} {% else %} # {% endif %}">{% if object.email %} {{ object.email}} {% else %} None {% endif %}</a>
 	    </div>
 	  </div>
 	    
@@ -72,7 +72,7 @@
 	  <div class="item">
 	    <i class="External Link icon"></i>
 	    <div class="content">
-	      <a href="http://www.abc.com/">http://www.abc.com/</a>
+	      <a href="{% if object.url %} {{ object.url}} {% else %} # {% endif %}">{{ object.url}}</a>
 	    </div>
 	  </div>
 	  
