@@ -3,142 +3,17 @@
 {{ object.rid }}'s Profile &raquo; Edit
 {% endblock %}
 {% block content %}
-<!--<div class="ui segment blue" style="padding:2%;min-height:200px;">-->
- 
-  <div class="ui grid">
-    <div class="four wide column">
-      <div class="ui afix segment blue">
-	
-	<center><img src="/media/{{ object.profile_pic }}" class="ui rounded small image"></center>
-	
-	<div class="ui divided list">
-	  <div class="item">
-	    <i class="icon {{object.get_gender_display}}"></i>
-	    <div class="content">
-	      {{ object.get_full_name }}
-	    </div>
-	  </div>
-	  <div class="item">
-	    <i class="icon calendar"></i>
-	    <div class="content">
-	      Born on {{ object.date_of_birth }}
-	    </div>
-	  </div>
-	</div>
-	<div class="ui ribbon label">University Info</div>
-	<div class="ui divided list">
-	  
-	  <div class="item">
-	    <i class="icon user"></i>
-	    <div class="content">
-	       Id : {{ object.rid }}
-	    </div>
-	  </div>
-	  <div class="item">
-	    <i class="icon University "></i>
-	    <div class="content">
-	      Department of  {{ object.get_dept_display }}
-	    </div>
-	  </div>
-	  <div class="item">
-	    <i class="calendar icon"></i>
-	    <div class="content">
-	      Joined in {{ object.year }}
-	    </div>
-	  </div>
-	  <div class="item">
-	    <i class=" icon Student"></i>
-	    <div class="content">
-	      {{ object.get_batch_display }}
-	    </div>
-	  </div>
-	</div>
-	<div class="ui ribbon label">Contact Info</div>
-	<div class="ui divided list">
-	  <div class="item">
-	    <i class="mail icon"></i>
-	    <div class="content">
-	      <a href="mailto:{{object.email}}">{{ object.email }}</a>
-	    </div>
-	  </div>
-	    
-	  <div class="item">
-	    <i class="call icon"></i>
-	    <div class="content">
-	      {{ object.mobile }}
-	    </div>
-	  </div>
-<!--
-    <div class="item">
-	    <i class="External Link icon"></i>
-	    <div class="content">
-	      <a href="http://www.abc.com/">http://www.abc.com/</a>
-	    </div>
-	  </div>
--->
-	</div>
-	{% ifequal object.rid user.rid %} <a class="ui mini button blue attached" href="#edit"> Edit Profile</a>{% endifequal %}		
+<div class="ui grid">
+  <div class="row">
+    <div class="thirteen wide column">
+      <div class="ui blue segment ">
+	<h5>Edit Profile</h5>
       </div>
-     
-
     </div>
-    <div class="twelve wide column">
-      <div class="ui grid">
 
-	<div class="sixteen wide column">
-	  <div class="ui segment">
-	    <div class="ui top attached label">Summary</div>
-	    <div class="content">
-	      Some summary about the user
-	    </div>
-	  </div>
-	</div>
-
-	<div class="sixteen wide column">
-	  <div class="ui segment">
-	    <div class="ui top attached label">Education</div>
-	    <div class="content">
-	      Education Information
-	    </div>
-	  </div>
-	</div>
-
-	<div class="sixteen wide column">
-	  <div class="ui segment">
-	    <div class="ui top attached label">Positons & Designations</div>
-	    <div class="content">
-	      Profile/ Role #1, #2
-	    </div>
-	  </div>
-	</div>
-
-	<div class="sixteen wide column">
-	  <div class="ui segment">
-	    <div class="ui top attached label">Interested Areas of Study</div>
-	    <div class="content">
-	      Area #1, Area #2, Area #3
-	    </div>
-	  </div>
-	</div>
-	
-	<div class="sixteen wide column">
-	  <div class="ui segment">
-	    <div class="ui top attached label">Technical Skills</div>
-	    <div class="content">
-	      Technologies Known #1, #2,
-	    </div>
-	  </div>
-	</div>
-
-	<div class="sixteen wide column">
-	  <div class="ui segment">
-	    <div class="ui top attached label">Achievements</div>
-	    <div class="content">
-	      Some achievements of the user #1, #2
-	    </div>
-	  </div>
-	</div>
-
+    <div class="three wide column">
+      <div class="ui vertical blue menu fluid">
+	<a class="item header "><i class="icon edit"></i> Edit Profile</a>
       </div>
     </div>
   </div>

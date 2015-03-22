@@ -43,7 +43,7 @@
     </div>
     <div class="three wide column">
       <div class="ui vertical blue menu fluid">
-	<a class="item header">Users Filter </a>
+	<a class="item header"><i class="icon user"></i> Users Filter </a>
 	<a class="item {% if not batch_code %}active{% endif %}" href="/depts/{{ dept_code }}">All Users</a>
 	{% for batch in batch_names %}
 	<a class="item {% if batch_code %}{% ifequal batch.0 batch_code  %}active{% endifequal%}{% endif %}" href="/depts/{{ dept_code }}/{{batch.0}}">{{ batch.1}}</a>
