@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from django.shortcuts import render
 
 class UserProfileDetailView(DetailView):
@@ -15,8 +15,35 @@ class UserProfileDetailView(DetailView):
 from auth.models import RUser
 
 def DeptView(request):
-    context = {'depts' : RUser.department_labels }
-    return render(request, "users/depts.html", context)
+    return render(request, "users/depts.html")
 
-def DeptDetailView(request, slug):
-    return render(request, "users/dept_details.html")
+class DeptDetailView(ListView):
+    models = RUser
+    paginate_by = 2
+    
+    def get_queryset(self):
+        if(len(self.args) == 2 ):
+            return RUser.objects.filter(dept=self.args[0]).filter(batch=self.args[1])
+        else :
+            return RUser.objects.filter(dept=self.args[0])
+            
+    def get_context_data(self, **kwargs):       
+        dept_dict = dict(RUser.department_labels)
+        if self.args[0] in dept_dict :
+            context = super(DeptDetailView, self).get_context_data(**kwargs)
+            context['dept_full_name'] = dept_dict[self.args[0]]
+            context['dept_code'] = self.args[0]
+            if ( len(self.args) == 2):
+                batch_dict = dict(RUser.batch_labels)
+                if self.args[1] in batch_dict :
+                    context['batch_code'] = self.args[1]
+                    context['batch_full_name'] = batch_dict[self.args[1]]
+                else :
+                    raise ValueError('Batch \'%s\' Not found' % (self.args[1]))
+            else :
+                context['batch_full_name'] = "All Users"
+                
+            return context
+        else :
+            raise ValueError('Department \'%s\' Not found' %(self.args[0]))
+        

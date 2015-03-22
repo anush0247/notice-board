@@ -141,7 +141,6 @@ class RUser(AbstractBaseUser):
         max_length=3,
         choices=department_labels,
         verbose_name="Dept. Name",
-        default="NA",
     )
 
     batch_labels = (
@@ -162,7 +161,6 @@ class RUser(AbstractBaseUser):
         max_length=2,
         choices=batch_labels,
         verbose_name="Batch",
-        default="NA",
     )
 
     year = models.IntegerField(
