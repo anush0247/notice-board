@@ -5,14 +5,11 @@ from django.contrib.auth.models import (
 from django.core.validators import RegexValidator
 
 class UserManager(BaseUserManager):
-    def create_user(self, rid, email, date_of_birth, gender, first_name,last_name, dept,batch, year, password=None):
+    def create_user(self, rid, date_of_birth, gender, first_name,last_name, dept,batch, year, password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
         """
-        if not email:
-            raise ValueError('Users must have an email address')
-
         if not first_name:
             raise ValueError('Users must have a first name')
 
@@ -22,7 +19,6 @@ class UserManager(BaseUserManager):
             
         user = self.model(
             rid = rid,
-            email =self.normalize_email(email),
             date_of_birth = date_of_birth,
             gender = gender,
             first_name = first_name,
@@ -36,14 +32,13 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, rid, email, date_of_birth, gender, first_name, last_name, dept, batch, year, password):
+    def create_superuser(self, rid, date_of_birth, gender, first_name, last_name, dept, batch, year, password):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
         """
         user = self.create_user(
             rid,
-            email,
             password=password,
             date_of_birth=date_of_birth,
             gender = gender,
@@ -119,6 +114,12 @@ class RUser(AbstractBaseUser):
         null=True,
         verbose_name = "Mobile No",
     )
+
+    url = models.URLField(
+        max_length=40,
+        null = True,
+        verbose_name = "Website / URL",
+    )
     
     department_labels = (
         ("CSE", "Computer Science"),
@@ -167,6 +168,8 @@ class RUser(AbstractBaseUser):
         max_length = 4,
         verbose_name = "Year"
     )
+
+    
     
     is_active = models.BooleanField(
         default=True,
@@ -182,7 +185,7 @@ class RUser(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = 'rid'
-    REQUIRED_FIELDS = ['first_name','last_name','date_of_birth','gender','email','dept','year','batch']
+    REQUIRED_FIELDS = ['first_name','last_name','date_of_birth','gender','dept','year','batch']
 
     def get_full_name(self):
         return "%s %s" %(self.first_name, self.last_name)
