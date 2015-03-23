@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from auth.models import RUser
+from auth.models import RUser, Profile, Roles, RolePermissions, Skills, Areas, Education, Experience, Achievements
 
 
 class UserCreationForm(forms.ModelForm):
@@ -15,7 +15,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = RUser
-        fields = ('rid','date_of_birth','gender','email','first_name','dept','year')
+        fields = ('rid','date_of_birth','gender','first_name','dept','year')
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -43,7 +43,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = RUser
-        fields = ('rid','first_name','last_name','date_of_birth','gender','email','url','profile_pic','mobile','dept','batch','year','is_active', 'is_admin')
+        fields = ('rid','first_name','last_name','date_of_birth','gender','dept','batch','year','is_active', 'is_admin')
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
         # This is done here, rather than on the field, because the
@@ -59,13 +59,12 @@ class UserAdmin(UserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('rid','first_name','gender','email', 'date_of_birth','dept','batch','year','is_admin')
+    list_display = ('rid','first_name','gender', 'date_of_birth','dept','batch','year','is_admin')
     list_filter = ('dept','gender','year')
     fieldsets = (
         ('User Info', {'fields': ('rid','first_name','last_name')}),
         ('Security',{'fields': ('password',)}),
         ('Basic Personal Info', {'fields': ('date_of_birth','gender')}),
-        ('Additional Info',{'fields':('email','profile_pic','mobile','url',)}),
         ('University Info',{'fields': ('dept','batch','year')}),
         ('Permissions', {'fields': ('is_admin',)}),
     )
@@ -79,8 +78,8 @@ class UserAdmin(UserAdmin):
         ('University Info',{'fields': ('dept','batch','year')}),
         ('Permissions', {'fields': ('is_admin',)}),
     )
-    search_fields = ('email','rid','first_name','last_name')
-    ordering = ('rid','email',)
+    search_fields = ('rid','first_name','last_name')
+    ordering = ('rid',)
     filter_horizontal = ()
 
 # Now register the new UserAdmin...
@@ -89,3 +88,42 @@ admin.site.register(RUser, UserAdmin)
 # unregister the Group model from admin.
 admin.site.unregister(Group)
 
+class AreasAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+    
+admin.site.register(Areas, AreasAdmin)
+
+class SkillsAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+
+admin.site.register(Skills, SkillsAdmin)
+
+class RolePermissionsAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+
+admin.site.register(RolePermissions, RolePermissionsAdmin)
+
+class RolesAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+
+admin.site.register(Roles, RolesAdmin)
+
+class ProfileAdmin(admin.ModelAdmin):
+    list_display= ('user','mobile','email','url',)
+
+admin.site.register(Profile, ProfileAdmin)
+
+class EducationAdmin(admin.ModelAdmin):
+    list_display=('user','school','degree','period',)
+
+admin.site.register(Education, EducationAdmin)
+
+class ExperienceAdmin(admin.ModelAdmin):
+    list_display=('user','organization','title','period',)
+
+admin.site.register(Experience, ExperienceAdmin)
+
+class AchievementsAdmin(admin.ModelAdmin):
+    list_display=('user','title','issuer',)
+
+admin.site.register(Achievements, AchievementsAdmin)

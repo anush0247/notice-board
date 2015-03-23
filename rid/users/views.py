@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from django.views.generic import DetailView, ListView
 from django.shortcuts import render
 
+from auth.models import Profile
+
 class UserProfileDetailView(DetailView):
     model = get_user_model()
     slug_field = "rid"
@@ -9,7 +11,7 @@ class UserProfileDetailView(DetailView):
 
     def get_object(self, queryset=None):
         user = super(UserProfileDetailView, self).get_object(queryset)
-        #Profile.objects.get_or_create(user=user)
+        Profile.objects.get_or_create(user=user)
         return user
 
 from auth.models import RUser

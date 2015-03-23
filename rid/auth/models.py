@@ -74,23 +74,10 @@ class RUser(AbstractBaseUser):
         default="",
     )
 
-    email = models.EmailField(
-        verbose_name='Email address',
-        max_length=255,
-        unique=True
-    )
-
     date_of_birth = models.DateField(
         verbose_name = "Date of Birth",
     )
     
-    profile_pic = models.FileField(
-        upload_to='profile_pic/%Y/%m/%d',
-        blank=True,
-        null=True,
-        verbose_name="Profile Picture",
-        default = 'profile_pic/default.jpg',
-    )
 
     gender_labels = (
         ("M", "Male"),
@@ -103,23 +90,6 @@ class RUser(AbstractBaseUser):
         verbose_name = "Gender",
     )
     
-    phone_regex = RegexValidator(
-        regex=r'^[0]?[789]{1}\d{9}$',
-        message="Mobile No format error"
-    )
-
-    mobile = models.CharField(
-        max_length=11,
-        validators=[phone_regex],
-        null=True,
-        verbose_name = "Mobile No",
-    )
-
-    url = models.URLField(
-        max_length=40,
-        null = True,
-        verbose_name = "Website / URL",
-    )
     
     department_labels = (
         ("CSE", "Computer Science"),
@@ -187,6 +157,9 @@ class RUser(AbstractBaseUser):
     USERNAME_FIELD = 'rid'
     REQUIRED_FIELDS = ['first_name','last_name','date_of_birth','gender','dept','year','batch']
 
+    def __unicode__(self):
+        return self.rid
+
     def get_full_name(self):
         return "%s %s" %(self.first_name, self.last_name)
 
@@ -212,3 +185,207 @@ class RUser(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
+class Areas(models.Model):
+    title = models.CharField(max_length=20, unique=True)
+
+    def __unicode__(self):
+        return self.title
+
+class Skills(models.Model):
+    title = models.CharField(max_length=20, unique=True)
+
+    def __unicode__(self):
+        return self.title
+
+class RolePermissions(models.Model):
+    title = models.CharField(max_length=20, unique=True)
+
+    def __unicode__(self):
+        return self.title
+
+
+class Roles(models.Model):
+    title = models.CharField(max_length=20, unique=True)
+    permissions = models.ManyToManyField(RolePermissions)
+    
+    def __unicode__(self):
+        return self.title
+
+
+        
+class Profile(models.Model):
+
+    phone_regex = RegexValidator(
+        regex=r'^[0]?[789]{1}\d{9}$',
+        message="Mobile No format error"
+    )
+
+    mobile = models.CharField(
+        max_length=11,
+        validators=[phone_regex],
+        null=True,
+        blank = True,
+        verbose_name = "Mobile No",
+    )
+
+    url = models.URLField(
+        max_length=40,
+        null = True,
+        blank = True,
+        verbose_name = "Website / URL",
+    )
+
+    profile_pic = models.FileField(
+        upload_to='profile_pic/%Y/%m/%d',
+        blank=True,
+        null=True,
+        verbose_name="Profile Picture",
+        default = 'profile_pic/default.jpg',
+    )
+
+    
+    email = models.EmailField(
+        verbose_name='Email address',
+        max_length=255,
+        blank = True,
+    )
+
+    roles = models.ManyToManyField(Roles)
+    areas = models.ManyToManyField(Areas)
+    skills = models.ManyToManyField(Skills)
+    
+    user = models.OneToOneField(RUser, unique=True)
+
+    def __unicode__(self):
+        return self.user
+
+
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        profile, created = Profile.objects.get_or_create(user=instance)
+
+from django.db.models.signals import post_save
+post_save.connect(create_profile, sender=RUser)
+    
+class Education(models.Model):
+    school = models.CharField(
+        verbose_name = "School / College / University",
+        max_length = 128,
+        null = False,
+    )
+
+    period = models.CharField(
+        verbose_name = "Time Period of Education",
+        max_length = 10,
+        null = True,
+        blank = True,
+    )
+
+    degree = models.CharField(
+        verbose_name = "Degree ",
+        max_length = 128,
+        null = True,
+        blank = True,
+    )
+    
+    stream = models.CharField(
+        verbose_name = "Field of Study",
+        max_length = 10,
+        null = True,
+        blank = True,
+    )
+
+    grade = models.FloatField(
+        verbose_name = "Grade",
+        null = True,
+        blank = True,
+    )
+
+    user = models.ForeignKey(RUser)
+
+    def __unicode__(self):
+        return self.user
+
+    
+class Experience(models.Model):
+    
+    organization = models.CharField(
+        verbose_name = "Organization Name",
+        max_length = 128,
+        null = True,
+        blank = True,
+    )
+
+    title = models.CharField(
+        verbose_name = "Title or Position",
+        max_length = 128,
+        null = True,
+        blank = True,
+    )
+
+    location = models.CharField(
+        verbose_name = "Location",
+        max_length = 128,
+        null = True,
+        blank = True,
+    )
+
+    period = models.CharField(
+        verbose_name = "Time Period",
+        max_length = 128,
+        null = True,
+        blank = True,
+    )
+
+    description = models.TextField(
+        verbose_name = "Description",
+        null = True,
+        blank = True,
+    )
+    
+    user = models.ForeignKey(RUser)
+
+    def __unicode__(self):
+        return self.user
+
+    
+class Achievements(models.Model):
+
+    issuer = models.CharField(
+        verbose_name = "Issuing Organization",
+        max_length = 128,
+        null = True,
+        blank = True,
+    )
+
+    title = models.CharField(
+        verbose_name = "Title or Position",
+        max_length = 128,
+        null = True,
+        blank = True,
+    )
+
+    location = models.CharField(
+        verbose_name = "Location",
+        max_length = 128,
+        null = True,
+        blank = True,
+    )
+
+    period = models.CharField(
+        verbose_name = "Time Period",
+        max_length = 128,
+        null = True,
+        blank = True,
+    )
+
+    description = models.TextField(
+        verbose_name = "Description",
+        null = True,
+        blank = True,
+    )
+    
+    user = models.ForeignKey(RUser)
+
+    def __unicode__(self):
+        return self.user
