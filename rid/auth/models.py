@@ -349,7 +349,6 @@ class Experience(models.Model):
     )
     
     user = models.ForeignKey(RUser)
-
     def __unicode__(self):
         return unicode(self.user)
 

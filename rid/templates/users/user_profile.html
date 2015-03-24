@@ -210,7 +210,33 @@
 	  <div class="ui segment">
 	    <div class="ui top attached label">Achievements</div>
 	    <div class="content">
-	      Some achievements of the user #1, #2
+	      {% if achievements.count %}
+	      <div class="ui feed">
+	      {% for ach in achievements  %}
+	      <div class="event">
+		<div class="label">
+		    <i class="icon flag"></i>
+		</div>
+		<div class="content">
+		  <div class="summary">
+		    {{ ach.title }} 
+		    <div class="date">
+		      {{ ach.period }}
+		    </div>
+		  </div>
+		  <div class="extra text">
+		    {{ ach.description }}
+		  </div>
+		  <div class="meta">
+		    @ {{ ach.issuer }} - {{ ach.location }}
+		  </div>
+		</div>
+	      </div>
+	      {% endfor %}
+	      </div>
+	      {% else %}
+	      No Achievements Information provided
+	      {% endif %}
 	    </div>
 	  </div>
 	</div>
