@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.views.generic import DetailView, ListView
 from django.shortcuts import render
 
-from auth.models import Profile
+from auth.models import Profile #Education, Experiences, Acchievements
 
 class UserProfileDetailView(DetailView):
     model = get_user_model()
@@ -14,6 +14,9 @@ class UserProfileDetailView(DetailView):
         Profile.objects.get_or_create(user=user)
         return user
 
+    def get_context_data(self, **kwargs):
+        pass
+        
 from auth.models import RUser
 
 def DeptView(request):
