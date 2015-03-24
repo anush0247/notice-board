@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.views.generic import DetailView, ListView
 from django.shortcuts import render
 
-from auth.models import Profile #Education, Experiences, Acchievements
+from auth.models import Profile, Education, Experience, Achievements
 
 class UserProfileDetailView(DetailView):
     model = get_user_model()
@@ -15,7 +15,13 @@ class UserProfileDetailView(DetailView):
         return user
 
     def get_context_data(self, **kwargs):
-        pass
+        context = super(UserProfileDetailView, self).get_context_data(**kwargs)
+        context['education']   = Education.objects.filter(user=RUser.objects.filter(rid=str(self.kwargs['slug'])))
+        context['experience']   = Experience.objects.filter(user=RUser.objects.filter(rid=str(self.kwargs['slug'])))
+        context['achievements']   = Achievements.objects.filter(user=RUser.objects.filter(rid=str(self.kwargs['slug'])))        
+        
+        return context
+        #pass
         
 from auth.models import RUser
 

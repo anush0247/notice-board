@@ -96,7 +96,32 @@
 	  <div class="ui segment">
 	    <div class="ui top attached label">Education</div>
 	    <div class="content">
-	      Education Information
+	      {% if education.count %}
+	      <table class="ui very basic table compact" width="100%">
+		<thead>
+		  <tr>
+		    <th class="center aligned">Period</th>
+		    <th class="center aligned">School / College / University</th>
+		    <th class="center aligned">Degree</th>
+		    <th class="center aligned">Area of Study</th>
+		    <th class="center aligned">Percentage</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  {% for edu in education  %}
+		  <tr>
+		    <td class="center aligned" width="5%">{{ edu.period }}</td>
+		    <td style="padding-left:1%">{{ edu.school }}</td>
+		    <td class="center aligned" width="20%">{{ edu.degree }}</td>
+		    <td class="center aligned" width="20%">{{ edu.stream }}</td>
+		    <td class="center aligned" width="5%">{{ edu.grade }}</td>		   
+		  </tr>
+		  {% endfor %}
+		</tbody>
+	      </table>
+	      {% else %}
+	      No Educational Information provided
+	      {% endif %}
 	    </div>
 	  </div>
 	</div>
@@ -105,7 +130,33 @@
 	  <div class="ui segment">
 	    <div class="ui top attached label">Experiences</div>
 	    <div class="content">
-	      Experiences Information
+	      {% if experience.count %}
+	      <div class="ui feed">
+	      {% for exp in experience  %}
+	      <div class="event">
+		<div class="label">
+		    <i class="icon flag"></i>
+		</div>
+		<div class="content">
+		  <div class="summary">
+		    {{ exp.title }} 
+		    <div class="date">
+		      {{ exp.period }}
+		    </div>
+		  </div>
+		  <div class="extra text">
+		    {{ exp.description }}
+		  </div>
+		  <div class="meta">
+		    @ {{ exp.organization }} - {{ exp.location }}
+		  </div>
+		</div>
+	      </div>
+	      {% endfor %}
+	      </div>
+	      {% else %}
+	      No Experiences Information provided
+	      {% endif %}
 	    </div>
 	  </div>
 	</div>
