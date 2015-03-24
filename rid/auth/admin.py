@@ -105,11 +105,13 @@ admin.site.register(RolePermissions, RolePermissionsAdmin)
 
 class RolesAdmin(admin.ModelAdmin):
     list_display = ('title',)
+    filter_horizontal = ('permissions',)
 
 admin.site.register(Roles, RolesAdmin)
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display= ('user','mobile','email','url',)
+    filter_horizontal = ('roles','areas','skills',)
 
 admin.site.register(Profile, ProfileAdmin)
 

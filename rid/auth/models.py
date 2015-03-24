@@ -158,7 +158,7 @@ class RUser(AbstractBaseUser):
     REQUIRED_FIELDS = ['first_name','last_name','date_of_birth','gender','dept','year','batch']
 
     def __unicode__(self):
-        return self.rid
+        return unicode(self.rid)
 
     def get_full_name(self):
         return "%s %s" %(self.first_name, self.last_name)
@@ -250,6 +250,11 @@ class Profile(models.Model):
         blank = True,
     )
 
+    summary = models.TextField(
+        verbose_name="Summary",
+        blank=True
+    )
+
     roles = models.ManyToManyField(Roles)
     areas = models.ManyToManyField(Areas)
     skills = models.ManyToManyField(Skills)
@@ -257,7 +262,7 @@ class Profile(models.Model):
     user = models.OneToOneField(RUser, unique=True)
 
     def __unicode__(self):
-        return self.user
+        return unicode(self.user)
 
 
 def create_profile(sender, instance, created, **kwargs):

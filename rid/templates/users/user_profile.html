@@ -7,7 +7,7 @@
     <div class="four wide column">
       <div class="ui afix segment blue">
 	
-	<center><img src="/media/profile_pic/default.jpg" class="ui rounded small image"></center>
+	<center><img src="/media/{{ object.profile.profile_pic }}" class="ui rounded small image"></center>
 	
 	<div class="ui divided list">
 	  <div class="item">
@@ -56,21 +56,21 @@
 	  <div class="item">
 	    <i class="mail icon"></i>
 	    <div class="content">
-	      <a href="mailto:#"> None</a>
+	      <a href="mailto:{%if object.profile.email %}{{ object.profile.email }} {% else %} # {% endif%}"> {%if object.profile.email %}{{ object.profile.email }} {% else %} None {% endif%}</a>
 	    </div>
 	  </div>
 	    
 	  <div class="item">
 	    <i class="call icon"></i>
 	    <div class="content">
-	     None
+	     {{ object.profile.mobile }}
 	    </div>
 	  </div>
 
 	  <div class="item">
 	    <i class="External Link icon"></i>
 	    <div class="content">
-	      <a href="#">None</a>
+	      <a href="{%if object.profile.url %}{{ object.profile.url }} {% else %} # {% endif%}"> {{ object.profile.url }}</a>
 	    </div>
 	  </div>
 	  
@@ -114,7 +114,13 @@
 	  <div class="ui segment">
 	    <div class="ui top attached label">Positons & Designations</div>
 	    <div class="content">
-	      Profile/ Role #1, #2
+	      {% if object.profile.roles.all %}
+	      {% for item in object.profile.roles.all %}
+	      <span class="ui label green">{{ item }}</span>
+	      {% endfor%}
+	      {% else %}
+	      No roles assigned
+	      {% endif%}
 	    </div>
 	  </div>
 	</div>
@@ -123,7 +129,13 @@
 	  <div class="ui segment">
 	    <div class="ui top attached label">Interested Areas of Study</div>
 	    <div class="content">
-	      Area #1, Area #2, Area #3
+	      {% if object.profile.areas.all %}
+	      {% for item in object.profile.areas.all %}
+	      <span class="ui label red">{{ item }}</span>
+	      {% endfor%}
+	      {% else %}
+	      No Interested areas specified
+	      {% endif%}	      
 	    </div>
 	  </div>
 	</div>
@@ -132,7 +144,13 @@
 	  <div class="ui segment">
 	    <div class="ui top attached label">Technical Skills</div>
 	    <div class="content">
-	      Technologies Known #1, #2,
+	      {% if object.profile.skills.all %}
+	      {% for item in object.profile.skills.all %}
+	      <span class="ui label blue">{{ item }}</span>  
+	      {% endfor%}
+	      {% else %}
+	      No Skills specified
+	      {% endif%}	      
 	    </div>
 	  </div>
 	</div>
