@@ -44,6 +44,10 @@ class DeptDetailView(ListView):
             context = super(DeptDetailView, self).get_context_data(**kwargs)
             context['dept_full_name'] = dept_dict[self.args[0]]
             context['dept_code'] = self.args[0]
+            tmp = ()
+            for b in RUser.batch_labels:
+                tmp += ( (b+(RUser.objects.filter(dept=self.args[0]).filter(batch=b[0]).count(),),) , )
+                context['batch_tuple'] = tmp
             if ( len(self.args) == 2):
                 batch_dict = dict(RUser.batch_labels)
                 if self.args[1] in batch_dict :

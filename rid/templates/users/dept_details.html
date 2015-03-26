@@ -33,17 +33,18 @@
 	
 	{% else %}
 	<div class="ui ignored warning message">
-	  No Users to display
+	  No Users to display from this
 	</div>
 	{% endif %}
       </div>
     </div>
     <div class="three wide column">
+      {% if count %} {{ count }} {% else %} No count found {% endif %}
       <div class="ui vertical blue menu fluid">
 	<a class="item header">Users Filter </a>
 	<a class="item" href="/depts/{{ slug }}">All Users</a>
-	{% for batch in batch_names %}
-	<a class="item" href="/depts/{{ slug }}/{{batch.0}}">{{ batch.1}}</a>
+	{% for batch in batch_names_updated %}
+	<a class="item" href="/depts/{{ slug }}/{{batch.0}}">{{ batch.0 }} {{ batch.2}}</a>
 	{% endfor %}
       </div>
     </div>
