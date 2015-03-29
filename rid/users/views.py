@@ -30,7 +30,7 @@ def DeptView(request):
 
 class DeptDetailView(ListView):
     models = RUser
-    paginate_by = 2
+    paginate_by = 4
     
     def get_queryset(self):
         if(len(self.args) == 2 ):

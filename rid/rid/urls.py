@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^auth/', include('auth.urls')),
     url(r'^users/', include('users.urls')),
     url(r'^depts/', include('users.depts')),
+    url(r'^edit/', include('users.edit')),
     url(r'^admin/', include(admin.site.urls)),
 )
 

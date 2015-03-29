@@ -8,14 +8,14 @@
 	
 	<h5 class="ui dividing header"><i class="icon University"> </i>Department of {{ dept_full_name }} &raquo; {{ batch_full_name}} </h5>
 	{% if object_list.count %}
-	<div class="ui four cards">
+	<div class="ui three cards">
 	{% for userobj in object_list  %}
 	<!--<div class="ui four cards">-->
 	  <div class="card">
 	    <!--<img class="ui avatar image" src="/media/{{ userobj.profile.profile_pic }}">-->
 	    <div class="content">
 	      <a class="header" href="/users/{{userobj.rid}}">{{ userobj.get_full_name}}</a>
-	      <div class="description">@ {{ userobj.rid}}, {{ userobj.batch}}</div>
+	      <div class="description">@ {{ userobj.rid}}, {{ userobj.get_batch_display}}</div>
 	    </div>
 	  </div>
 	<!--</div>-->
