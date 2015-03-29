@@ -6,20 +6,21 @@
     <div class="thirteen wide column">
       <div class="ui segment blue" style="padding:2%;min-height:200px;">
 	
-	<h5 class="ui header"> Department of {{ dept_full_name }} &raquo; {{ batch_full_name}} </h5>
+	<h5 class="ui dividing header"><i class="icon University"> </i>Department of {{ dept_full_name }} &raquo; {{ batch_full_name}} </h5>
 	{% if object_list.count %}
-	
+	<div class="ui four cards">
 	{% for userobj in object_list  %}
-	<div class="ui list">
-	  <div class="item">
-	    <img class="ui avatar image" src="/media/{{ userobj.profile_pic }}">
+	<!--<div class="ui four cards">-->
+	  <div class="card">
+	    <!--<img class="ui avatar image" src="/media/{{ userobj.profile.profile_pic }}">-->
 	    <div class="content">
 	      <a class="header" href="/users/{{userobj.rid}}">{{ userobj.get_full_name}}</a>
-	      <div class="description">@ {{ userobj.rid}}</div>
+	      <div class="description">@ {{ userobj.rid}}, {{ userobj.batch}}</div>
 	    </div>
 	  </div>
-	</div>
+	<!--</div>-->
 	{% endfor %}
+	</div>
 	<!--<a class="ui blue tag label" style="float:right">Page 10</a>-->
 	{% if is_paginated %}
 	<br>
