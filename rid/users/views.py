@@ -62,3 +62,7 @@ class DeptDetailView(ListView):
         else :
             raise ValueError('Department \'%s\' Not found' %(self.args[0]))
         
+
+
+def EditProfilePicView(request):
+    return render(request, "users/user_profile_edit.html")
