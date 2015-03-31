@@ -4,8 +4,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from auth.models import RidUser, Profile, Role, RolePermission, Skill, Area, Education, Experience, Achievement, UserRole
-
+from auth.models import RidUser
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
@@ -87,50 +86,3 @@ admin.site.register(RidUser, UserAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)
-
-class AreaAdmin(admin.ModelAdmin):
-    list_display = ('title',)
-    
-admin.site.register(Area, AreaAdmin)
-
-class SkillAdmin(admin.ModelAdmin):
-    list_display = ('title',)
-
-admin.site.register(Skill, SkillAdmin)
-
-class RolePermissionAdmin(admin.ModelAdmin):
-    list_display = ('title','is_verified')
-
-admin.site.register(RolePermission, RolePermissionAdmin)
-
-class RoleAdmin(admin.ModelAdmin):
-    list_display = ('title','is_verified')
-    filter_horizontal = ('permissions',)
-
-admin.site.register(Role, RoleAdmin)
-
-class ProfileAdmin(admin.ModelAdmin):
-    list_display= ('user','mobile','email','url',)
-    filter_horizontal = ('areas','skills',)
-
-admin.site.register(Profile, ProfileAdmin)
-
-class UserRoleAdmin(admin.ModelAdmin):
-    list_display= ('user','role','is_verified')
-
-admin.site.register(UserRole, UserRoleAdmin)
-
-class EducationAdmin(admin.ModelAdmin):
-    list_display=('user','school','degree','period',)
-
-admin.site.register(Education, EducationAdmin)
-
-class ExperienceAdmin(admin.ModelAdmin):
-    list_display=('user','organization','title','period',)
-
-admin.site.register(Experience, ExperienceAdmin)
-
-class AchievementAdmin(admin.ModelAdmin):
-    list_display=('user','title','issuer',)
-
-admin.site.register(Achievement, AchievementAdmin)

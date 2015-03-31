@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.views.generic import DetailView, ListView
 from django.shortcuts import render
 
-from auth.models import Profile, Education, Experience, Achievement, UserRole
+from users.models import Profile, Education, Experience, Achievement, UserRole
 
 class UserProfileDetailView(DetailView):
     model = get_user_model()
