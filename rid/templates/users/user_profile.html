@@ -165,9 +165,9 @@
 	  <div class="ui segment">
 	    <div class="ui top attached label">Positons & Designations</div>
 	    <div class="content">
-	      {% if object.profile.roles.all %}
-	      {% for item in object.profile.roles.all %}
-	      <span class="ui label green">{{ item }}</span>
+	      {% if roles.count %}
+	      {% for item in roles %}
+	      <span class="ui label green">{{ item.role }} {{ item.is_verified }}</span>
 	      {% endfor%}
 	      {% else %}
 	      No roles assigned

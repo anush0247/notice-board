@@ -32,9 +32,9 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, rid, date_of_birth, gender, first_name, last_name, dept, batch, year, password):
+    def create_supeRidUser(self, rid, date_of_birth, gender, first_name, last_name, dept, batch, year, password):
         """
-        Creates and saves a superuser with the given email, date of
+        Creates and saves a supeRidUser with the given email, date of
         birth and password.
         """
         user = self.create_user(
@@ -54,7 +54,7 @@ class UserManager(BaseUserManager):
         return user
 
 
-class RUser(AbstractBaseUser):
+class RidUser(AbstractBaseUser):
 	
     rid = models.CharField(
         verbose_name = "University ID",
@@ -185,28 +185,28 @@ class RUser(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
-class Areas(models.Model):
+class Area(models.Model):
     title = models.CharField(max_length=20, unique=True)
 
     def __unicode__(self):
         return self.title
 
-class Skills(models.Model):
+class Skill(models.Model):
     title = models.CharField(max_length=20, unique=True)
 
     def __unicode__(self):
         return self.title
 
-class RolePermissions(models.Model):
+class RolePermission(models.Model):
     title = models.CharField(max_length=20, unique=True)
 
     def __unicode__(self):
         return self.title
 
 
-class Roles(models.Model):
+class Role(models.Model):
     title = models.CharField(max_length=20, unique=True)
-    permissions = models.ManyToManyField(RolePermissions)
+    permissions = models.ManyToManyField(RolePermission)
     
     def __unicode__(self):
         return self.title
@@ -255,11 +255,10 @@ class Profile(models.Model):
         blank=True
     )
 
-    roles = models.ManyToManyField(Roles)
     areas = models.ManyToManyField(Areas)
     skills = models.ManyToManyField(Skills)
     
-    user = models.OneToOneField(RUser, unique=True)
+    user = models.OneToOneField(RidUser, unique=True)
 
     def __unicode__(self):
         return unicode(self.user)
@@ -270,8 +269,23 @@ def create_profile(sender, instance, created, **kwargs):
         profile, created = Profile.objects.get_or_create(user=instance)
 
 from django.db.models.signals import post_save
-post_save.connect(create_profile, sender=RUser)
+post_save.connect(create_profile, sender=RidUser)
+
+class UserRole(models.Model):
+
+    role = models.ForeignKey(Role)
+
+    is_verified = models.BooleanField(
+        default=False,
+        verbose_name = "Is Admin Verified",
+    )
     
+    user = models.ForeignKey(RidUser)
+
+    def __unicode__(self):
+        return unicode(self.user)
+    
+
 class Education(models.Model):
     school = models.CharField(
         verbose_name = "School / College / University",
@@ -306,7 +320,7 @@ class Education(models.Model):
         blank = True,
     )
 
-    user = models.ForeignKey(RUser)
+    user = models.ForeignKey(RidUser)
 
     def __unicode__(self):
         return unicode(self.user)
@@ -348,12 +362,12 @@ class Experience(models.Model):
         blank = True,
     )
     
-    user = models.ForeignKey(RUser)
+    user = models.ForeignKey(RidUser)
     def __unicode__(self):
         return unicode(self.user)
 
     
-class Achievements(models.Model):
+class Achievement(models.Model):
 
     issuer = models.CharField(
         verbose_name = "Issuing Organization",
@@ -389,7 +403,7 @@ class Achievements(models.Model):
         blank = True,
     )
     
-    user = models.ForeignKey(RUser)
+    user = models.ForeignKey(RidUser)
 
     def __unicode__(self):
         return unicode(self.user)

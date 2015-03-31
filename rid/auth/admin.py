@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from auth.models import RUser, Profile, Roles, RolePermissions, Skills, Areas, Education, Experience, Achievements
+from auth.models import RidUser, Profile, Roles, RolePermission, Skill, Area, Education, Experience, Achievement, UserRole
 
 
 class UserCreationForm(forms.ModelForm):
@@ -14,7 +14,7 @@ class UserCreationForm(forms.ModelForm):
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
 
     class Meta:
-        model = RUser
+        model = RidUser
         fields = ('rid','date_of_birth','gender','first_name','dept','year')
 
     def clean_password2(self):
@@ -42,7 +42,7 @@ class UserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField()
 
     class Meta:
-        model = RUser
+        model = RidUser
         fields = ('rid','first_name','last_name','date_of_birth','gender','dept','batch','year','is_active', 'is_admin')
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -83,25 +83,25 @@ class UserAdmin(UserAdmin):
     filter_horizontal = ()
 
 # Now register the new UserAdmin...
-admin.site.register(RUser, UserAdmin)
+admin.site.register(RidUser, UserAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)
 
-class AreasAdmin(admin.ModelAdmin):
+class AreaAdmin(admin.ModelAdmin):
     list_display = ('title',)
     
-admin.site.register(Areas, AreasAdmin)
+admin.site.register(Area, AreaAdmin)
 
-class SkillsAdmin(admin.ModelAdmin):
+class SkillAdmin(admin.ModelAdmin):
     list_display = ('title',)
 
-admin.site.register(Skills, SkillsAdmin)
+admin.site.register(Skill, SkillAdmin)
 
-class RolePermissionsAdmin(admin.ModelAdmin):
+class RolePermissionAdmin(admin.ModelAdmin):
     list_display = ('title',)
 
-admin.site.register(RolePermissions, RolePermissionsAdmin)
+admin.site.register(RolePermission, RolePermissionAdmin)
 
 class RolesAdmin(admin.ModelAdmin):
     list_display = ('title',)
@@ -111,9 +111,14 @@ admin.site.register(Roles, RolesAdmin)
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display= ('user','mobile','email','url',)
-    filter_horizontal = ('roles','areas','skills',)
+    filter_horizontal = ('roles','Area','Skill',)
 
 admin.site.register(Profile, ProfileAdmin)
+
+class UserRoleAdmin(admin.ModelAdmin):
+    list_display= ('user','role','is_verified')
+
+admin.site.register(UserRole, UserRoleAdmin)
 
 class EducationAdmin(admin.ModelAdmin):
     list_display=('user','school','degree','period',)
@@ -125,7 +130,7 @@ class ExperienceAdmin(admin.ModelAdmin):
 
 admin.site.register(Experience, ExperienceAdmin)
 
-class AchievementsAdmin(admin.ModelAdmin):
+class AchievementAdmin(admin.ModelAdmin):
     list_display=('user','title','issuer',)
 
-admin.site.register(Achievements, AchievementsAdmin)
+admin.site.register(Achievement, AchievementAdmin)
