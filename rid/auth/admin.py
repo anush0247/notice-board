@@ -99,12 +99,12 @@ class SkillAdmin(admin.ModelAdmin):
 admin.site.register(Skill, SkillAdmin)
 
 class RolePermissionAdmin(admin.ModelAdmin):
-    list_display = ('title',)
+    list_display = ('title','is_verified')
 
 admin.site.register(RolePermission, RolePermissionAdmin)
 
 class RoleAdmin(admin.ModelAdmin):
-    list_display = ('title',)
+    list_display = ('title','is_verified')
     filter_horizontal = ('permissions',)
 
 admin.site.register(Role, RoleAdmin)

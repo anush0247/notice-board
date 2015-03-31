@@ -200,6 +200,11 @@ class Skill(models.Model):
 class RolePermission(models.Model):
     title = models.CharField(max_length=20, unique=True)
 
+    is_verified = models.BooleanField(
+        default=False,
+        verbose_name = "Is Admin Verified",
+    )
+
     def __unicode__(self):
         return self.title
 
@@ -208,6 +213,11 @@ class Role(models.Model):
     title = models.CharField(max_length=20, unique=True)
     permissions = models.ManyToManyField(RolePermission)
     
+    is_verified = models.BooleanField(
+        default=False,
+        verbose_name = "Is Admin Verified",
+    )
+
     def __unicode__(self):
         return self.title
 
