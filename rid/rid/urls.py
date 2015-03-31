@@ -13,8 +13,8 @@ urlpatterns = patterns('',
         url(r'^auth/', include('auth.urls')),
         url(r'^api/', include('api.urls')),
         url(r'^users/', include('users.urls')),
-        url(r'^depts/', include('users.depts')),
-        url(r'^edit/', include('users.edit')),
+        url(r'^depts/', include('users.depts_urls')),
+        url(r'^edit/', include('users.edit_urls')),
         url(r'^admin/', include(admin.site.urls)),
 )
 

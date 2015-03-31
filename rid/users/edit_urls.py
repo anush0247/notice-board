@@ -1,9 +1,8 @@
-
 # importing django url patterns modules
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required as auth
 
-from .views import EditProfilePicView
+from users.edit_views import EditProfilePicView
  
 # auth url patterns
 urlpatterns = patterns('',

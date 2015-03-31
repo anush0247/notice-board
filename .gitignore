@@ -1,7 +1,8 @@
 *~
+*.pyc
+*.sqlite3
 bin/  
 include/
 lib/
 local/
 rid/media/
-*.pyc
