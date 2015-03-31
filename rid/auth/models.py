@@ -32,7 +32,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_supeRidUser(self, rid, date_of_birth, gender, first_name, last_name, dept, batch, year, password):
+    def create_superuser(self, rid, date_of_birth, gender, first_name, last_name, dept, batch, year, password):
         """
         Creates and saves a supeRidUser with the given email, date of
         birth and password.
@@ -255,8 +255,8 @@ class Profile(models.Model):
         blank=True
     )
 
-    areas = models.ManyToManyField(Areas)
-    skills = models.ManyToManyField(Skills)
+    areas = models.ManyToManyField(Area)
+    skills = models.ManyToManyField(Skill)
     
     user = models.OneToOneField(RidUser, unique=True)
 

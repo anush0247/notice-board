@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from auth.models import RidUser, Profile, Roles, RolePermission, Skill, Area, Education, Experience, Achievement, UserRole
+from auth.models import RidUser, Profile, Role, RolePermission, Skill, Area, Education, Experience, Achievement, UserRole
 
 
 class UserCreationForm(forms.ModelForm):
@@ -103,15 +103,15 @@ class RolePermissionAdmin(admin.ModelAdmin):
 
 admin.site.register(RolePermission, RolePermissionAdmin)
 
-class RolesAdmin(admin.ModelAdmin):
+class RoleAdmin(admin.ModelAdmin):
     list_display = ('title',)
     filter_horizontal = ('permissions',)
 
-admin.site.register(Roles, RolesAdmin)
+admin.site.register(Role, RoleAdmin)
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display= ('user','mobile','email','url',)
-    filter_horizontal = ('roles','Area','Skill',)
+    filter_horizontal = ('areas','skills',)
 
 admin.site.register(Profile, ProfileAdmin)
 

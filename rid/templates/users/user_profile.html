@@ -87,7 +87,11 @@
 	  <div class="ui segment">
 	    <div class="ui top attached label">Summary</div>
 	    <div class="content">
+		{% if object.profile.summary %}
 	      {{ object.profile.summary }}
+		{% else %}
+		No summary specificd
+		{% endif %}		
 	    </div>
 	  </div>
 	</div>
