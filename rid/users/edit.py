@@ -7,7 +7,7 @@ from .views import EditProfilePicView
  
 # auth url patterns
 urlpatterns = patterns('',
-    url(r"^$", auth(EditProfilePicView), name="edit_profile_pic"),
+    url(r"^profile_pic/$", auth(EditProfilePicView), name="edit_profile_pic"),
 )
  
 

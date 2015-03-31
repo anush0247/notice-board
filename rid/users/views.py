@@ -65,4 +65,4 @@ class DeptDetailView(ListView):
 
 
 def EditProfilePicView(request):
-    return render(request, "users/user_profile_edit.html")
+    return render(request, "users/edit/profile_pic.html")
