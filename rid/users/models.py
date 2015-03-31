@@ -36,6 +36,7 @@ class Role(models.Model):
         verbose_name = "Is Admin Verified",
     )
 
+    
     def __unicode__(self):
         return self.title
 
