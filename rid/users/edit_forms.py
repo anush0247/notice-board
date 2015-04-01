@@ -9,3 +9,13 @@ class ProfilePicForm(forms.ModelForm):
         widgets = {
            'profile_pic' : forms.FileInput(attrs={'id':'attachmentName','style' : 'display:none;',}),
         }
+
+class ContactInfoForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+	fields = ['url','email','mobile']
+        widgets = {
+           'url' : forms.URLInput(attrs={'placeholder':'Enter your website / blog url'}),
+           'email' : forms.EmailInput(attrs={'placeholder':'Enter your email address '}),
+           'mobile' : forms.NumberInput(attrs={'placeholder':'Enter your mobile number'}),
+        }
