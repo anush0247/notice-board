@@ -1,0 +1,29 @@
+{% extends "users/edit/base.html" %}
+{% block edit_title %} Contact Info {% endblock %}
+{% block edit_title1 %} Contact Info {% endblock %}
+{% block edit_icon %} mobile {% endblock %}
+{% block contact_info %} active {% endblock %}
+{% block edit_body %}
+<form method="post" action="" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="ui form">
+    
+    <div class="field">
+      <label>Website / Blog URL </label>
+      {{ form.url }}
+    </div>
+    <div class="field">
+      <label>Email Address </label>
+      {{ form.email }}
+    </div>
+    <div class="field">
+      <label>Mobile No </label>
+      {{ form.mobile }}
+    </div>
+    <div class="field">
+      <button type="submit" class="ui small button blue"><i class="icon Check Circle"> </i>Update  </button>	      
+    </div>
+  </div>
+</form>
+
+{% endblock %}

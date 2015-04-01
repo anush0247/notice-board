@@ -17,5 +17,5 @@ class ContactInfoForm(forms.ModelForm):
         widgets = {
            'url' : forms.URLInput(attrs={'placeholder':'Enter your website / blog url'}),
            'email' : forms.EmailInput(attrs={'placeholder':'Enter your email address '}),
-           'mobile' : forms.NumberInput(attrs={'placeholder':'Enter your mobile number'}),
+           'mobile' : forms.TextInput(attrs={'placeholder':'Enter your mobile number', 'style':'max-length:11'}),
         }
