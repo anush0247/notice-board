@@ -21,7 +21,7 @@
     <div class="two fields">
       
       <div class="field">
-	<label>Title</label>
+	<label>Title {%if form %} abc {% else %} not abc {% endif %}</label>
 	{{ form.title }}
       </div>
       <div class="field">

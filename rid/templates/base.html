@@ -12,6 +12,8 @@
       $(document).ready(function(){
 	   $("#user_menu").dropdown();
 	   $("#dept_menu").dropdown();
+	   $("#developer_menu").dropdown();
+	   $("#api_menu").dropdown();
       });
      
       //alert($("#user_menu").dropdown());
@@ -28,13 +30,20 @@
 	    {% endfor %}
 	  </div>
 	</div>
-	<a class="item {% block menu_resources  %} {% endblock %}"><i class="file icon"></i> Resources </a>
-	<a class="item {% block menu_aboutus  %} {% endblock %}"><i class="info icon"></i> About us </a>
+	<div class="item ui dropdown {% block menu_developer  %} {% endblock %}" id="developer_menu">
+	  <i class="code icon"></i> Developers <i class="icon dropdown"></i>
+	  <div class="menu">
+		<a class="item"> API Endpoints</a>
+		<a class="item ">Documentation</a>
+		<a class="item ">Applications</a>
+	  </div>
+	</div>
 	<div class="item ui dropdown {% block menu_user  %} {% endblock %}" id="user_menu">
 	  <i class="icon user"></i> {{ user.rid }} <i class="icon dropdown"></i>
 	  <div class="menu">
+	    <a class="item" href="/messages/"><i class="inbox icon"></i> Messages</a>
 	    <a class="item" href="/users/{{ user.rid }}"><i class="edit icon"></i> Profile</a>
-	    <a class="item"><i class="settings icon"></i> Settings</a>
+	    <a class="item" href="/auth/settings/"><i class="settings icon"></i> Settings</a>
 	    <a class="item" href="/auth/logout/"><i class="sign out icon"></i> Logout</a>	    
 	  </div>
 	</div>

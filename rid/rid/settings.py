@@ -112,8 +112,15 @@ LOGIN_URL=reverse_lazy("login")
 LOGIN_REDIRECT_URL=reverse_lazy("home")
 LOGOUT_URL=reverse_lazy("logout")
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
 TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
     'users.context_processors.get_dept_names',
+    'django.contrib.auth.context_processors.auth',
     "django.contrib.messages.context_processors.messages",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
 )
