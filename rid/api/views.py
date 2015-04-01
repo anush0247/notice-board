@@ -51,8 +51,10 @@ def contact_info(request):
 
 @auth
 def profile_pic(request):
+    print 'hello'
     try:
         profile_pic = Profile.objects.get(user=RidUser.objects.get(rid=request.user.rid))
+        print profile_pic
     except Profile.DoesNotExist:
         return HttpResponse(status=404)
     
@@ -84,7 +86,7 @@ def education(request):
         return JSONResponse(serializer.data)
 
 @auth
-def area(request):
+def areas(request):
     try:
         area = Profile.objects.filter(user=RidUser.objects.get(rid=request.user.rid))
     except Profile.DoesNotExist:

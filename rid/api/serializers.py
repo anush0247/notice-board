@@ -22,12 +22,12 @@ class ContactSerializer(serializers.ModelSerializer):
         model = Profile
         fields=('mobile','url','email')
 
- 
+
 class ProfilePicSerializer(serializers.HyperlinkedModelSerializer):
 
 	class Meta:
 	    model = Profile
-	    fields=('profile_pic','url')
+	    fields=('profile_pic',)
 
 
 class SummarySerializer(serializers.ModelSerializer):
