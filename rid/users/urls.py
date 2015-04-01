@@ -8,6 +8,7 @@ from .views import UserProfileDetailView
 # auth url patterns
 urlpatterns = patterns('',
 	url(r"^(?P<slug>[A-Za-z0-9_]+)/$", auth(UserProfileDetailView.as_view()), name="profile"),
+	url(r'^(?P<slug>[A-Za-z0-9_]+)/edit/', include('users.edit_urls')),
 )
  
 
