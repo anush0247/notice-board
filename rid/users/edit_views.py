@@ -1,10 +1,10 @@
 from django.core.urlresolvers import reverse
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, ListView
 from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 
 
-from users.models import Profile
+from users.models import Profile, Education
 from users.edit_forms import ProfilePicForm, ContactInfoForm
 
 
@@ -35,3 +35,15 @@ class UpdateContactInfo(UpdateView):
     def get_success_url(self):
         messages.success(self.request,'Contact Info Updated successfully')
         return reverse('edit_contact_info', kwargs={'slug':self.object.user})
+
+
+
+class EducationListView(ListView):
+    model = Education
+    template_name = "users/edit/education_list.html"
+    
+    def get_queryset(self):
+         return Education.objects.filter(user=self.request.user).order_by("-id")
+
+
+    

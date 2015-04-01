@@ -1,0 +1,39 @@
+{% extends "users/edit/base.html" %}
+{% block edit_title %} Education {% endblock %}
+{% block edit_title1 %} Education {% endblock %}
+{% block edit_icon %} University {% endblock %}
+{% block education %} active {% endblock %}
+{% block edit_body %}
+{% if object_list.count %}
+<table class="ui very basic table compact" width="100%">
+<thead>
+  <tr>
+    <th class="center aligned">Period</th>
+    <th style="padding-left:1%">School / College / University</th>
+    <th class="center aligned">Degree</th>
+    <th class="center aligned">Area of Study</th>
+    <th class="center aligned">Percentage</th>
+    <th class="center aligned">Actions</th>
+  </tr>
+</thead>
+<tbody>
+  {% for edu in object_list  %}
+  <tr>
+    <td class="center aligned" width="5%">{{ edu.period }}</td>
+    <td style="padding-left:1%">{{ edu.school }}</td>
+    <td class="center aligned" width="20%">{{ edu.degree }}</td>
+    <td class="center aligned" width="20%">{{ edu.stream }}</td>
+    <td class="center aligned" width="5%">{{ edu.grade }}</td>
+    <td class="center aligned" width="10%">
+	<a class="ui button green icon" href="/users/{{ user.rid }}/edit/education/{{ edu.id }}/update"><i class="icon edit"></i></a> 
+	<a class="ui button red icon" href="/users/{{ user.rid }}/edit/education/{{ edu.id }}/delete"><i class="icon trash"></i></a>
+    </td>		   
+  </tr>
+  {% endfor %}
+</tbody>
+</table>
+<a class="ui button blue icon" href="/users/{{ user.rid }}/edit/education/add"><i class="icon plus"></i> Add New</a>
+{% else %}
+No Educational Information provided
+{% endif %}
+{% endblock %}
