@@ -40,7 +40,8 @@ class EducationSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Education
-		fields=('school','period','degree','stream','grade')
+		fields=('period','degree','stream','grade','school')
+		dept = 2
 
 class AreaSerializer(serializers.ModelSerializer):
     

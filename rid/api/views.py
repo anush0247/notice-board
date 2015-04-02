@@ -51,7 +51,7 @@ def contact_info(request):
 
 @auth
 def profile_pic(request):
-    print 'hello'
+    #print 'hello'
     try:
         profile_pic = Profile.objects.get(user=RidUser.objects.get(rid=request.user.rid))
         print profile_pic

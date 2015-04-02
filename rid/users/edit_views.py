@@ -5,7 +5,7 @@ from django.contrib import messages
 
 
 from users.models import Profile, Education
-from users.edit_forms import ProfilePicForm, ContactInfoForm
+from users.edit_forms import ProfilePicForm, ContactInfoForm, SkillsForm
 
 
 class UpdateProfilePic(UpdateView):
@@ -35,6 +35,20 @@ class UpdateContactInfo(UpdateView):
     def get_success_url(self):
         messages.success(self.request,'Contact Info Updated successfully')
         return reverse('edit_contact_info', kwargs={'slug':self.object.user})
+
+class UpdateSkills(UpdateView):
+    model = Profile
+    template_name = "users/edit/skills.html"
+    form_class = SkillsForm
+   
+    def get_object(self, queryset=None):
+	if(self.request.user.rid != self.kwargs['slug']):
+		raise PermissionDenied("Not allwoed to Edit others profile")
+        return Profile.objects.get_or_create(user=self.request.user)[0]
+
+    def get_success_url(self):
+        messages.success(self.request,'Skills Updated successfully')
+        return reverse('edit_skills', kwargs={'slug':self.object.user})
 
 
 

@@ -1,0 +1,24 @@
+{% extends "users/edit/base.html" %}
+{% block edit_title %} Technical Skills {% endblock %}
+{% block edit_title1 %} Technical Skills {% endblock %}
+{% block edit_icon %} tags {% endblock %}
+{% block skills %} active {% endblock %}
+{% block edit_body %}
+<form method="post" action="" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="ui form">
+    
+    <div class="field">
+      <label>Select Technical Skills </label>
+      
+      {% for radio in form.skills %}
+	<div class="ui checkbox">{{ radio.tag }} <label>{{ radio.choice_label}} </label></div>&emsp; 
+      {% endfor %}
+    </div>
+    <div class="field">
+      <button type="submit" class="ui small button blue"><i class="icon Check Circle"> </i>Update  </button>	      
+    </div>
+  </div>
+</form>
+
+{% endblock %}
