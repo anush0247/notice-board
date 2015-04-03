@@ -5,8 +5,9 @@ from django.contrib import messages
 
 
 from users.models import Profile, Education, Skill, Area
+from auth.models import RidUser
 from users.edit_forms import ProfilePicForm, ContactInfoForm, SkillsForm, AddSkillForm
-from users.edit_forms import AreasForm, AddAreaForm
+from users.edit_forms import AreasForm, AddAreaForm, EducationForm
 
 class UpdateProfilePic(UpdateView):
     model = Profile
@@ -49,7 +50,7 @@ class UpdateSkills(UpdateView):
     def get_success_url(self):
         messages.success(self.request,'Skills Updated successfully')
         return reverse('edit_skills', kwargs={'slug':self.object.user})
-
+        
 class AddSkill(CreateView):
     model = Skill
     form_class = AddSkillForm
@@ -62,6 +63,11 @@ class AddSkill(CreateView):
 
     def get_success_url(self):
         return reverse('edit_skills', kwargs={'slug':self.request.user})
+
+    def get_initial(self):
+	if(self.request.user.rid != self.kwargs['slug']):
+		raise PermissionDenied("Not allwoed to Edit others profile")
+        pass
 
 
 class UpdateAreas(UpdateView):
@@ -91,13 +97,60 @@ class AddArea(CreateView):
     def get_success_url(self):
         return reverse('edit_areas', kwargs={'slug':self.request.user})
 
-        
+    def get_initial(self):
+	if(self.request.user.rid != self.kwargs['slug']):
+		raise PermissionDenied("Not allwoed to Edit others profile")
+        pass
+
+    
 class EducationListView(ListView):
     model = Education
     template_name = "users/edit/education_list.html"
-    
+
+    def get_object(self, queryset=None):
+	if(self.request.user.rid != self.kwargs['slug']):
+		raise PermissionDenied("Not allwoed to Edit others profile")
+        return Education.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid))
+
     def get_queryset(self):
          return Education.objects.filter(user=self.request.user).order_by("-id")
 
+class UpdateEducation(UpdateView):
+    model = Education
+    template_name = "users/edit/education_form.html"
+    form_class = EducationForm
 
+
+    def get_object(self, queryset=None):
+	if(self.request.user.rid != self.kwargs['slug']):
+		raise PermissionDenied("Not allwoed to Edit others profile")
+                
+        if(self.request.user.rid != Education.objects.get(id=self.kwargs['pk']).user.rid):
+		raise PermissionDenied("Not allwoed to Edit others Education Details")
+                
+        return Education.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid)).get(id=self.kwargs['pk'])
     
+    def get_success_url(self):
+        messages.success(self.request,'Education #%d updated successfully ' % int(self.kwargs['pk']))
+        return reverse('education_list', kwargs={'slug':self.request.user})
+    
+class AddEducation(CreateView):
+    model = Education
+    template_name = "users/edit/education_form.html"
+    form_class = EducationForm
+
+    def form_valid(self, form):
+        f = form.save(commit=False)
+        f.user = self.request.user
+        form.save()
+        messages.success(self.request,'New Area added successfully')
+        return super(AddEducation, self).form_valid(form)
+
+    def get_success_url(self):
+        messages.success(self.request,'New Education added successfully ')
+        return reverse('education_list', kwargs={'slug':self.request.user})
+
+    def get_initial(self):
+	if(self.request.user.rid != self.kwargs['slug']):
+		raise PermissionDenied("Not allwoed to Edit others profile")
+        pass

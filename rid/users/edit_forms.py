@@ -1,5 +1,5 @@
 from django import forms
-from users.models import Profile,Skill, Area
+from users.models import Profile,Skill, Area, Education
 from django.forms.widgets import CheckboxSelectMultiple  
 
 class ProfilePicForm(forms.ModelForm):
@@ -61,3 +61,10 @@ class AreasForm(forms.ModelForm):
 
         self.fields['areas'].widget = CheckboxSelectMultiple()
         self.fields["areas"].queryset = Area.objects.all() 
+
+class EducationForm(forms.ModelForm):
+    class Meta:
+        model = Education
+        exclude = ("user",)
+        fileds = ['school','period','degree','stream','grade']
+        
