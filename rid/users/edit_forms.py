@@ -1,5 +1,5 @@
 from django import forms
-from users.models import Profile,Skill
+from users.models import Profile,Skill, Area
 from django.forms.widgets import CheckboxSelectMultiple  
 
 class ProfilePicForm(forms.ModelForm):
@@ -33,9 +33,6 @@ class SkillsForm(forms.ModelForm):
     class Meta:
         model = Profile
 	fields = ['skills',]
-        #widgets = 
-        #   'skills' : forms.URLInput(attrs={'placeholder':'Enter your website / blog url'}),
-        #}
 
     def __init__(self, *args, **kwargs):
 
@@ -43,3 +40,24 @@ class SkillsForm(forms.ModelForm):
 
         self.fields["skills"].widget = CheckboxSelectMultiple()
         self.fields["skills"].queryset = Skill.objects.all() 
+
+
+class AddAreaForm(forms.ModelForm):
+    class Meta:
+        model = Area
+        fileds = ['title',]
+        widget = {
+            'title' : forms.TextInput(attrs={'placeholder':'Enter your title',}),
+        }
+
+class AreasForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+	fields = ['areas',]
+
+    def __init__(self, *args, **kwargs):
+
+        super(AreasForm, self).__init__(*args, **kwargs)
+
+        self.fields['areas'].widget = CheckboxSelectMultiple()
+        self.fields["areas"].queryset = Area.objects.all() 

@@ -4,9 +4,9 @@ from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 
 
-from users.models import Profile, Education, Skill
+from users.models import Profile, Education, Skill, Area
 from users.edit_forms import ProfilePicForm, ContactInfoForm, SkillsForm, AddSkillForm
-
+from users.edit_forms import AreasForm, AddAreaForm
 
 class UpdateProfilePic(UpdateView):
     model = Profile
@@ -53,19 +53,43 @@ class UpdateSkills(UpdateView):
 class AddSkill(CreateView):
     model = Skill
     form_class = AddSkillForm
-    #success_url = reverse_lazy("skill_add")
     template_name = "users/edit/skill_add.html"
     
     def form_valid(self, form):
-        #f = form.save(commit=False)
-        #f.sender = self.request.user
         form.save()
         messages.success(self.request,'New Skill added successfully')
         return super(AddSkill, self).form_valid(form)
 
     def get_success_url(self):
-        #messages.success(self.request,'Contact Info Updated successfully')
         return reverse('edit_skills', kwargs={'slug':self.request.user})
+
+
+class UpdateAreas(UpdateView):
+    model = Area
+    template_name = "users/edit/areas.html"
+    form_class = AreasForm
+   
+    def get_object(self, queryset=None):
+	if(self.request.user.rid != self.kwargs['slug']):
+		raise PermissionDenied("Not allwoed to Edit others profile")
+        return Profile.objects.get_or_create(user=self.request.user)[0]
+
+    def get_success_url(self):
+        messages.success(self.request,'Areas Updated successfully')
+        return reverse('edit_areas', kwargs={'slug':self.object.user})
+
+class AddArea(CreateView):
+    model = Area
+    form_class = AddAreaForm
+    template_name = "users/edit/area_add.html"
+    
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request,'New Area added successfully')
+        return super(AddArea, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('edit_areas', kwargs={'slug':self.request.user})
 
         
 class EducationListView(ListView):
