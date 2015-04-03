@@ -21,6 +21,14 @@ class ContactInfoForm(forms.ModelForm):
            'mobile' : forms.TextInput(attrs={'placeholder':'Enter your mobile number', 'style':'max-length:11'}),
         }
 
+class AddSkillForm(forms.ModelForm):
+    class Meta:
+        model = Skill
+        fileds = ['title',]
+        widget = {
+            'title' : forms.TextInput(attrs={'placeholder':'Enter your title',}),
+        }
+
 class SkillsForm(forms.ModelForm):
     class Meta:
         model = Profile

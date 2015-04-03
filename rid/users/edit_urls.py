@@ -2,7 +2,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required as auth
 
-from users.edit_views import UpdateProfilePic, UpdateContactInfo, EducationListView, UpdateSkills
+from users.edit_views import UpdateProfilePic, UpdateContactInfo, EducationListView, UpdateSkills, AddSkill
  
 # auth url patterns
 urlpatterns = patterns('',
@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r"^profile_pic/$", auth(UpdateProfilePic.as_view()), name="edit_profile_pic"),
     url(r"^education/$", auth(EducationListView.as_view()), name="education_list"),
     url(r"^skills/$", auth(UpdateSkills.as_view()), name="edit_skills"),
+    url(r"^skills/add$", auth(AddSkill.as_view()), name="skill_add"),
 )
  
 
