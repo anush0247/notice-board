@@ -32,8 +32,8 @@
   {% endfor %}
 </tbody>
 </table>
-<a class="ui button blue mini icon" href="/users/{{ user.rid }}/edit/education/add"><i class="icon plus"></i> Add New</a>
 {% else %}
-No Educational Information provided
+<h5>No Educational Information provided</h5>
 {% endif %}
+<a class="ui button blue mini icon" href="/users/{{ user.rid }}/edit/education/add"><i class="icon plus"></i> Add New</a>
 {% endblock %}

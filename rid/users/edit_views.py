@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse, reverse_lazy
-from django.views.generic import UpdateView, ListView, CreateView
+from django.views.generic import UpdateView, ListView, CreateView, DeleteView
 from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 
@@ -107,14 +107,15 @@ class EducationListView(ListView):
     model = Education
     template_name = "users/edit/education_list.html"
 
-    def get_object(self, queryset=None):
-	if(self.request.user.rid != self.kwargs['slug']):
-		raise PermissionDenied("Not allwoed to Edit others profile")
-        return Education.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid))
-
     def get_queryset(self):
          return Education.objects.filter(user=self.request.user).order_by("-id")
-
+         
+    def get_context_data(self, **kwargs):
+        if(self.request.user.rid != self.kwargs['slug']):
+            raise PermissionDenied("Not allwoed to Edit others profile")
+        context = super(EducationListView, self).get_context_data(**kwargs)
+        return context
+    
 class UpdateEducation(UpdateView):
     model = Education
     template_name = "users/edit/education_form.html"
@@ -143,7 +144,6 @@ class AddEducation(CreateView):
         f = form.save(commit=False)
         f.user = self.request.user
         form.save()
-        messages.success(self.request,'New Area added successfully')
         return super(AddEducation, self).form_valid(form)
 
     def get_success_url(self):
@@ -154,3 +154,21 @@ class AddEducation(CreateView):
 	if(self.request.user.rid != self.kwargs['slug']):
 		raise PermissionDenied("Not allwoed to Edit others profile")
         pass
+
+class DelEducation(DeleteView):
+    model = Education
+    template_name = "users/edit/education_del.html"
+    
+    def get_object(self, queryset=None):
+	if(self.request.user.rid != self.kwargs['slug']):
+		raise PermissionDenied("Not allwoed to Edit others profile")
+                
+        if(self.request.user.rid != Education.objects.get(id=self.kwargs['pk']).user.rid):
+		raise PermissionDenied("Not allwoed to Edit others Education Details")
+                
+        return Education.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid)).get(id=self.kwargs['pk'])
+    
+    def get_success_url(self):
+        messages.warning(self.request,'Education #%d deleted successfully ' % int(self.kwargs['pk']))
+        return reverse('education_list', kwargs={'slug':self.request.user})
+        
