@@ -54,6 +54,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'auth',
     'users',
+    'rest_framework',
+    'oauth2_provider',
+    'corsheaders',
 )
 
 MIDDLEWARE_CLASSES = (
