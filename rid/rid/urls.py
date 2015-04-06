@@ -14,7 +14,7 @@ urlpatterns = patterns('',
         url(r'^api/', include('api.urls')),
         url(r'^users/', include('users.urls')),
         url(r'^depts/', include('users.depts_urls')),
-        #url(r'^edit/', include('users.edit_urls')),
+        url(r'^dev/', include('dev.urls')),
         url(r'^admin/', include(admin.site.urls)),
 )
 

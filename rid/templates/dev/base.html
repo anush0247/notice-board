@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}
+{{ user.rid }}'s Settings &raquo; {% block edit_title %} {% endblock %}
+{% endblock %}
+{% block content %}
+<div class="ui grid">
+  <div class="row">
+    <div class="thirteen wide column">
+      <script>
+    	$(document).ready(function(){
+	    $('.message .close').on('click', function() {
+		$(this).closest('.message').fadeOut();
+	    });
+	});
+    	
+      </script>
+      {% if messages %}
+      {% for message in messages %}
+      <div {% if message.tags %} class="ui message {{ message.tags }}"{% endif %}><i class="close icon"></i>{{ message }}</div>
+      {% endfor %}
+      {% endif %}
+      <div class="ui blue segment " style="padding:2%;min-height:337px;">
+	<h5 class="ui header dividing "><i class="icon {% block edit_icon %}{% endblock %} "></i>Developers &raquo; {% block edit_title1 %}{% endblock %}</h5>
+	{% if form.errors %}
+	{% for error in form.errors %}
+	<div class="ui error message"> <i class="close icon"></i> {{ error.title }} is missing </div>
+	{% endfor %}
+	{% endif %}
+	{% block edit_body %}
+	{% endblock %}
+      </div>
+    </div>
+
+    <div class="three wide column">
+      <div class="ui vertical blue menu fluid">
+	<a class="item header"><i class="icon code"></i> Developers </a>
+	<a class="item {% block dev_intro %}{% endblock %}" href="/dev/intro/"><i class="icon Align Justify "></i> Introduction </a>
+	<a class="item {% block dev_docs %}{% endblock %}" href="/dev/docs/"><i class="icon File Text"></i> Documentation</a>
+	<a class="item {% block dev_apps %}{% endblock %}" href="/dev/apps/"><i class="icon Cubes"></i> Applications</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
