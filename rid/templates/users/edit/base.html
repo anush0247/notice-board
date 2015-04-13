@@ -3,18 +3,19 @@
 {{ user.rid }}'s Profile &raquo; Edit &raquo; {% block edit_title %} {% endblock %}
 {% endblock %}
 {% block content %}
+<script>
+$(document).ready(function(){
+    $('.message .close').on('click', function() {
+	$(this).closest('.message').fadeOut();
+    });
+    $('.checkbox').checkbox();
+    $('#id_role').dropdown();		
+});
+
+</script>
 <div class="ui grid">
   <div class="row">
     <div class="thirteen wide column">
-      <script>
-    	$(document).ready(function(){
-	    $('.message .close').on('click', function() {
-		$(this).closest('.message').fadeOut();
-	    });
-	    $('.checkbox').checkbox();
-	});
-    	
-      </script>
       {% if messages %}
       {% for message in messages %}
       <div {% if message.tags %} class="ui message {{ message.tags }}"{% endif %}><i class="close icon"></i>{{ message }}</div>
@@ -39,7 +40,7 @@
 	<a class="item {% block profile_pic %}{% endblock %}" href="/users/{{ user.rid }}/edit/profile_pic/"><i class="icon photo "></i> Profile Pic </a>
 	<a class="item {% block education  %}{% endblock %}" href="/users/{{ user.rid }}/edit/education/"><i class="icon University "></i> Education  </a>
 	<a class="item {% block exp %}{% endblock %}"><i class="icon flag"></i> Experiences </a>
-	<a class="item {% block roles %}{% endblock %}"><i class="icon road"></i> Position & Roles </a>
+	<a class="item {% block roles %}{% endblock %}" href="/users/{{ user.rid}}/edit/roles/" ><i class="icon road"></i> Position & Roles </a>
 	<a class="item {% block areas %}{% endblock %}" href="/users/{{ user.rid }}/edit/areas/"><i class="icon tags"></i> Interested Areas </a>
 	<a class="item {% block skills %}{% endblock %}" href="/users/{{ user.rid }}/edit/skills/"><i class="icon tree"></i> Technical Skills </a>
 	<a class="item {% block achv %}{% endblock %}"><i class="icon flag"></i> Achievements </a>

@@ -1,0 +1,25 @@
+{% extends "users/edit/base.html" %}
+{% block edit_title %} Position & Roles &raquo; {% if not object.pk %} Add New {% else %} Update #{{ object.pk }} {% endif %}  {% endblock %}
+{% block edit_title1 %} Position & Roles &raquo; {% if not object.pk %} Add New {% else %} Update #{{ object.pk }} {% endif %} {% endblock %}
+{% block edit_icon %} road {% endblock %}
+{% block roles %} active {% endblock %}
+{% block edit_body %}
+<form method="post" action="" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="ui form">
+    
+    <div class="field">
+      <label> Select Role </label>
+      {{ form.role }}
+    </div>
+    <div class="field">
+      <button type="submit" class="ui mini button blue">{% if not object.pk %} <i class="icon plus"></i> Add New {% else %} <i class="icon Check"> </i>Update {% endif %}  </button>
+      <a class="ui button green mini" style="float:right;" href="{% if not object.pk %}./{% else %}./../ {% endif %}" > <i class="icon undo"></i> Position & Roles </a>
+	{% if not object.pk %}
+      <a class="ui button purple mini" style="float:right;" href="/users/{{ user.rid }}/edit/roles/add/new_role/" > <i class="icon plus"></i> Add Role </a>
+	{% endif %}
+    </div>
+  </div>
+</form>
+
+{% endblock %}

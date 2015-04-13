@@ -1,0 +1,35 @@
+{% extends "users/edit/base.html" %}
+{% block edit_title %} Position & Roles {% endblock %}
+{% block edit_title1 %} Position & Roles {% endblock %}
+{% block edit_icon %} road {% endblock %}
+{% block roles %} active {% endblock %}
+{% block edit_body %}
+{% if object_list.count %}
+<table class="ui very basic table compact" width="100%">
+<thead>
+  <tr>
+    <th class="center aligned" width="5%"> # </th>
+    <th style="padding-left:1%">Position & Role Name</th>
+    <th class="center aligned" width="20%"> Admin Verified </th>
+    <th class="center aligned" width="10%"> Actions </th>
+  </tr>
+</thead>
+<tbody>
+  {% for rl in object_list  %}
+  <tr>
+    <td class="center aligned" width="5%"> {{ forloop.counter }} </td>
+    <td style="padding-left:1%">{{ rl.role }}</td>
+    <td class="center aligned" width="20%">{{ rl.is_verified}}</td>
+    <td class="center aligned" width="10%">
+	<a class="ui green " href="/users/{{ user.rid }}/edit/roles/{{ rl.id }}/update"><i class="icon edit"></i></a> 
+	<a class="ui red" href="/users/{{ user.rid }}/edit/roles/{{ rl.id }}/delete"><i class="icon trash"></i></a>
+    </td>		   
+  </tr>
+  {% endfor %}
+</tbody>
+</table>
+{% else %}
+<h5>No Roles Information provided</h5>
+{% endif %}
+<a class="ui button blue mini icon" href="/users/{{ user.rid }}/edit/roles/add"><i class="icon plus"></i> Add New</a>
+{% endblock %}

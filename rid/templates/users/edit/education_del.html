@@ -1,6 +1,6 @@
 {% extends "users/edit/base.html" %}
-{% block edit_title %} Education &raquo; {% if not object.pk %} Add New {% else %} Update #{{ object.pk }} {% endif %}  {% endblock %}
-{% block edit_title1 %} Education &raquo; {% if not object.pk %} Add New {% else %} Update #{{ object.pk }} {% endif %} {% endblock %}
+{% block edit_title %} Education &raquo; Delete # {{ object.pk }}  {% endblock %}
+{% block edit_title1 %} Education &raquo; Delete # {{ object.pk }} {% endblock %}
 {% block edit_icon %} University {% endblock %}
 {% block education %} active {% endblock %}
 {% block edit_body %}

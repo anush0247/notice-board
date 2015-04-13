@@ -4,10 +4,11 @@ from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 
 
-from users.models import Profile, Education, Skill, Area
+from users.models import Profile, Education, Skill, Area, Role, RolePermission, UserRole
 from auth.models import RidUser
 from users.edit_forms import ProfilePicForm, ContactInfoForm, SkillsForm, AddSkillForm
 from users.edit_forms import AreasForm, AddAreaForm, EducationForm
+from users.edit_forms import UserRoleForm, AddRoleForm, AddRolePermissionForm
 
 class UpdateProfilePic(UpdateView):
     model = Profile
@@ -171,4 +172,113 @@ class DelEducation(DeleteView):
     def get_success_url(self):
         messages.warning(self.request,'Education #%d deleted successfully ' % int(self.kwargs['pk']))
         return reverse('education_list', kwargs={'slug':self.request.user})
+        
+
+class UserRoleListView(ListView):
+    model = UserRole
+    template_name = "users/edit/user_role_list.html"
+
+    def get_queryset(self):
+         return UserRole.objects.filter(user=self.request.user).order_by("-id")
+         
+    def get_context_data(self, **kwargs):
+        if(self.request.user.rid != self.kwargs['slug']):
+            raise PermissionDenied("Not allwoed to Edit others profile")
+        context = super(UserRoleListView, self).get_context_data(**kwargs)
+        return context
+
+class AddUserRole(CreateView):
+    model = UserRole
+    form_class = UserRoleForm
+    template_name = "users/edit/user_role_form.html"
+    
+    def form_valid(self, form):
+        f = form.save(commit=False)
+        f.user = self.request.user
+        form.save()
+        messages.success(self.request,'New User Role added successfully')
+        return super(AddUserRole, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('user_role_list', kwargs={'slug':self.request.user})
+
+    def get_initial(self):
+	if(self.request.user.rid != self.kwargs['slug']):
+		raise PermissionDenied("Not allwoed to Edit others profile")
+        pass
+
+    
+class UpdateUserRole(UpdateView):
+    model = UserRole
+    template_name = "users/edit/user_role_form.html"
+    form_class = UserRoleForm
+
+
+    def get_object(self, queryset=None):
+	if(self.request.user.rid != self.kwargs['slug']):
+		raise PermissionDenied("Not allwoed to Edit others profile")
+                
+        if(self.request.user.rid != Education.objects.get(id=self.kwargs['pk']).user.rid):
+		raise PermissionDenied("Not allwoed to Edit others Role Details")
+                
+        return UserRole.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid)).get(id=self.kwargs['pk'])
+    
+    def get_success_url(self):
+        messages.success(self.request,'UserRole #%d updated successfully ' % int(self.kwargs['pk']))
+        return reverse('user_role_list', kwargs={'slug':self.request.user})
+
+class DelUserRole(DeleteView):
+    model = UserRole
+    template_name = "users/edit/user_role_del.html"
+    
+    def get_object(self, queryset=None):
+	if(self.request.user.rid != self.kwargs['slug']):
+		raise PermissionDenied("Not allwoed to Edit others profile")
+                
+        if(self.request.user.rid != UserRole.objects.get(id=self.kwargs['pk']).user.rid):
+		raise PermissionDenied("Not allwoed to Edit others Role Details")
+                
+        return UserRole.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid)).get(id=self.kwargs['pk'])
+    
+    def get_success_url(self):
+        messages.warning(self.request,'UserRole #%d deleted successfully ' % int(self.kwargs['pk']))
+        return reverse('user_role_list', kwargs={'slug':self.request.user})
+
+        
+class AddRole(CreateView):
+    model = Role
+    form_class = AddRoleForm
+    template_name = "users/edit/role_add.html"
+    
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request,'New Role added successfully')
+        return super(AddRole, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('user_role_add', kwargs={'slug':self.request.user})
+
+    def get_initial(self):
+	if(self.request.user.rid != self.kwargs['slug']):
+		raise PermissionDenied("Not allwoed to Edit others profile")
+        pass
+
+class AddRolePermission(CreateView):
+    model = RolePermission
+    form_class = AddRolePermissionForm
+    template_name = "users/edit/role_permission_add.html"
+    
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request,'New Role Permission added successfully')
+        return super(AddRolePermission, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('role_add', kwargs={'slug':self.request.user})
+
+    def get_initial(self):
+	if(self.request.user.rid != self.kwargs['slug']):
+		raise PermissionDenied("Not allwoed to Edit others profile")
+        pass
+
         
