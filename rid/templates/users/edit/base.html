@@ -21,8 +21,9 @@ $(document).ready(function(){
       <div {% if message.tags %} class="ui message {{ message.tags }}"{% endif %}><i class="close icon"></i>{{ message }}</div>
       {% endfor %}
       {% endif %}
-      <div class="ui blue segment " style="padding:2%;min-height:337px;">
-	<h5 class="ui header dividing "><i class="icon {% block edit_icon %}{% endblock %} "></i>Edit Profile &raquo; {% block edit_title1 %}{% endblock %}</h5>
+      <div class="ui blue segment " style="padding:2%;min-height:375px;">
+	<h5 class="ui header dividing ">Edit Profile &raquo; {% block edit_title1 %}{% endblock %} 
+	<small><a style="float:right" href="/users/{{ user.rid }}/"><i class="icon undo"></i> Back to Profile</a> </small></h5>
 	{% if form.errors %}
 	{% for error in form.errors %}
 	<div class="ui error message"> <i class="close icon"></i> {{ error.title }} is missing </div>
@@ -30,6 +31,7 @@ $(document).ready(function(){
 	{% endif %}
 	{% block edit_body %}
 	{% endblock %}
+	
       </div>
     </div>
 
@@ -39,11 +41,12 @@ $(document).ready(function(){
 	<a class="item {% block contact_info %}{% endblock %}" href="/users/{{ user.rid }}/edit/contact_info/"><i class="icon Mobile "></i> Contact Info </a>
 	<a class="item {% block profile_pic %}{% endblock %}" href="/users/{{ user.rid }}/edit/profile_pic/"><i class="icon photo "></i> Profile Pic </a>
 	<a class="item {% block education  %}{% endblock %}" href="/users/{{ user.rid }}/edit/education/"><i class="icon University "></i> Education  </a>
-	<a class="item {% block exp %}{% endblock %}"><i class="icon flag"></i> Experiences </a>
+	<a class="item {% block experience %}{% endblock %}" href="/users/{{ user.rid}}/edit/experience"><i class="icon flag"></i> Experiences </a>
 	<a class="item {% block roles %}{% endblock %}" href="/users/{{ user.rid}}/edit/roles/" ><i class="icon road"></i> Position & Roles </a>
 	<a class="item {% block areas %}{% endblock %}" href="/users/{{ user.rid }}/edit/areas/"><i class="icon tags"></i> Interested Areas </a>
 	<a class="item {% block skills %}{% endblock %}" href="/users/{{ user.rid }}/edit/skills/"><i class="icon tree"></i> Technical Skills </a>
-	<a class="item {% block achv %}{% endblock %}"><i class="icon flag"></i> Achievements </a>
+	<a class="item {% block achv %}{% endblock %}" href="/users/{{ user.rid}}/edit/achievements"><i class="icon flag"></i> Achievements </a>
+	<a class="item {% block summary %}{% endblock %}" href="/users/{{ user.rid}}/edit/summary"><i class="icon tree"></i> Summary </a>
       </div>
     </div>
   </div>

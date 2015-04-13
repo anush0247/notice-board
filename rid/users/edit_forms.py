@@ -1,5 +1,5 @@
 from django import forms
-from users.models import Profile,Skill, Area, Education, Role, RolePermission, UserRole
+from users.models import Profile,Skill, Area, Education, Experience, Achievement, Role, RolePermission, UserRole
 from django.forms.widgets import CheckboxSelectMultiple  
 
 class ProfilePicForm(forms.ModelForm):
@@ -100,3 +100,19 @@ class UserRoleForm(forms.ModelForm):
             'role' : forms.TextInput(attrs={'class':'ui dropdown',}),
         }
         
+class ExperienceForm(forms.ModelForm):
+    class Meta:
+        model = Experience
+        exclude = ("user",)
+        fields=['organization','title','location','period','description']
+
+class AchievementForm(forms.ModelForm):
+    class Meta:
+        model = Achievement
+        exclude = ("user",)
+        fields=['issuer','title','location','period','description']
+
+class SummaryForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields=['summary'] 

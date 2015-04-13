@@ -4,11 +4,12 @@ from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 
 
-from users.models import Profile, Education, Skill, Area, Role, RolePermission, UserRole
+from users.models import Profile, Education, Skill, Area, Role, RolePermission, UserRole, Experience,Achievement
 from auth.models import RidUser
 from users.edit_forms import ProfilePicForm, ContactInfoForm, SkillsForm, AddSkillForm
 from users.edit_forms import AreasForm, AddAreaForm, EducationForm
 from users.edit_forms import UserRoleForm, AddRoleForm, AddRolePermissionForm
+from users.edit_forms import AreasForm, AddAreaForm, EducationForm,ExperienceForm,AchievementForm,SummaryForm
 
 class UpdateProfilePic(UpdateView):
     model = Profile
@@ -281,4 +282,168 @@ class AddRolePermission(CreateView):
 		raise PermissionDenied("Not allwoed to Edit others profile")
         pass
 
-        
+
+#Experience views starts here
+
+class ExperienceListView(ListView):
+    model = Experience
+    template_name = "users/edit/experience_list.html"
+
+    def get_queryset(self):
+        return Experience.objects.filter(user=self.request.user).order_by("-id")
+
+    def get_context_data(self,**kwargs):
+        if(self.request.user.rid != self.kwargs['slug']):
+            raise PermissionDenied("Not allwoed to Edit others profile")
+        context = super(ExperienceListView, self).get_context_data(**kwargs)
+        return context
+
+
+class UpdateExperience(UpdateView):
+    model = Experience
+    template_name = "users/edit/experience_form.html"
+    form_class = ExperienceForm
+
+
+    def get_object(self, queryset=None):
+        if(self.request.user.rid != self.kwargs['slug']):
+            raise PermissionDenied("Not allwoed to Edit others profile")
+                
+        if(self.request.user.rid != Experience.objects.get(id=self.kwargs['pk']).user.rid):
+            raise PermissionDenied("Not allwoed to Edit others Experience Details")
+                
+        return Experience.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid)).get(id=self.kwargs['pk'])
+    
+    def get_success_url(self):
+        messages.success(self.request,'Experience #%d updated successfully ' % int(self.kwargs['pk']))
+        return reverse('experience_list', kwargs={'slug':self.request.user})
+    
+class AddExperience(CreateView):
+    model = Experience
+    template_name = "users/edit/experience_form.html"
+    form_class = ExperienceForm
+
+    def form_valid(self, form):
+        f = form.save(commit=False)
+        f.user = self.request.user
+        form.save()
+        return super(AddExperience, self).form_valid(form)
+
+    def get_success_url(self): 
+        messages.success(self.request,'New Experience added successfully ')
+        return reverse('experience_list', kwargs={'slug':self.request.user})
+
+    def get_initial(self):
+        if(self.request.user.rid != self.kwargs['slug']):
+            raise PermissionDenied("Not allwoed to Edit others profile")
+        pass
+
+class DelExperience(DeleteView):
+    model = Experience
+    template_name = "users/edit/experience_del.html"
+    
+    def get_object(self, queryset=None):
+        if(self.request.user.rid != self.kwargs['slug']):
+            raise PermissionDenied("Not allwoed to Edit others profile")
+                
+        if(self.request.user.rid != Experience.objects.get(id=self.kwargs['pk']).user.rid):
+            raise PermissionDenied("Not allwoed to Edit others Experience Details")
+                
+        return Experience.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid)).get(id=self.kwargs['pk'])
+    
+    def get_success_url(self):
+        messages.warning(self.request,'Experience #%d deleted successfully ' % int(self.kwargs['pk']))
+        return reverse('experience_list', kwargs={'slug':self.request.user})
+
+
+#Achievement views starts here
+
+class AchievementListView(ListView):
+    model = Achievement
+    template_name = "users/edit/achievement_list.html"
+
+    def get_queryset(self):
+        return Achievement.objects.filter(user=self.request.user).order_by("-id")
+
+    def get_context_data(self,**kwargs):
+        if(self.request.user.rid != self.kwargs['slug']):
+            raise PermissionDenied("Not allwoed to Edit others profile")
+        context = super(AchievementListView, self).get_context_data(**kwargs)
+        return context
+
+
+class UpdateAchievement(UpdateView):
+    model = Achievement
+    template_name = "users/edit/achievement_form.html"
+    form_class = AchievementForm
+
+
+    def get_object(self, queryset=None):
+        if(self.request.user.rid != self.kwargs['slug']):
+            raise PermissionDenied("Not allwoed to Edit others profile")
+                
+        if(self.request.user.rid != Achievement.objects.get(id=self.kwargs['pk']).user.rid):
+            raise PermissionDenied("Not allwoed to Edit others Achievement Details")
+                
+        return Achievement.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid)).get(id=self.kwargs['pk'])
+    
+    def get_success_url(self):
+        messages.success(self.request,'Achievement #%d updated successfully ' % int(self.kwargs['pk']))
+        return reverse('achievement_list', kwargs={'slug':self.request.user})
+    
+class AddAchievement(CreateView):
+    model = Achievement
+    template_name = "users/edit/achievement_form.html"
+    form_class = AchievementForm
+
+    def form_valid(self, form):
+        f = form.save(commit=False)
+        f.user = self.request.user
+        form.save()
+        return super(AddAchievement, self).form_valid(form)
+
+    def get_success_url(self): 
+        messages.success(self.request,'New Achievement added successfully ')
+        return reverse('achievement_list', kwargs={'slug':self.request.user})
+
+    def get_initial(self):
+        if(self.request.user.rid != self.kwargs['slug']):
+            raise PermissionDenied("Not allwoed to Edit others profile")
+        pass
+
+class DelAchievement(DeleteView):
+    model = Achievement
+    template_name = "users/edit/achievement_del.html"
+    
+    def get_object(self, queryset=None):
+        if(self.request.user.rid != self.kwargs['slug']):
+            raise PermissionDenied("Not allwoed to Edit others profile")
+                
+        if(self.request.user.rid != Achievement.objects.get(id=self.kwargs['pk']).user.rid):
+            raise PermissionDenied("Not allwoed to Edit others Achievement Details")
+                
+        return Achievement.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid)).get(id=self.kwargs['pk'])
+    
+    def get_success_url(self):
+        messages.warning(self.request,'Achievement #%d deleted successfully ' % int(self.kwargs['pk']))
+        return reverse('achievement_list', kwargs={'slug':self.request.user})
+
+
+#Summary views starts here
+
+
+class UpdateSummary(UpdateView):
+    model = Profile
+    template_name = "users/edit/summary.html"
+    form_class = SummaryForm
+
+
+    def get_object(self, queryset=None):
+        if(self.request.user.rid != self.kwargs['slug']):
+            raise PermissionDenied("Not allwoed to Edit others profile")
+                
+        return Profile.objects.get(user=RidUser.objects.get(rid=self.request.user.rid))
+    
+    def get_success_url(self):
+        messages.success(self.request,'Summary updated successfully ')
+        return reverse('summary_update', kwargs={'slug':self.request.user})
