@@ -43,6 +43,7 @@ class UpdateSkills(UpdateView):
     model = Profile
     template_name = "users/edit/skills.html"
     form_class = SkillsForm
+
    
     def get_object(self, queryset=None):
 	if(self.request.user.rid != self.kwargs['slug']):

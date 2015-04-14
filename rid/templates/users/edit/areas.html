@@ -4,16 +4,27 @@
 {% block edit_icon %} tags {% endblock %}
 {% block areas %} active {% endblock %}
 {% block edit_body %}
+<script type="text/javascript">
+$(document).ready(function(){
+	$('select').dropdown();
+});
+</script>
 <form method="post" action="" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="ui form">
     
     <div class="field">
-      <label>Mark your Interested Areas </label>
-      
-      {% for radio in form.areas %}
-	<div class="ui checkbox">{{ radio.tag }} <label>{{ radio.choice_label}} </label></div>&emsp; 
-      {% endfor %}
+      	{% if user.profile.areas.all %}
+	{% for item in user.profile.areas.all %}
+	<span class="ui label teal">{{ item }}</span>
+	{% endfor%}
+	{% else %}
+	No Interested areas specified 
+	{% endif%}
+    </div>
+    <div class="field">
+      <label>Mark your technical skills </label>
+      {{ form.areas }}
     </div>
     <div class="field">
       <button type="submit" class="ui mini button blue"><i class="icon Check"> </i>Update Areas </button>

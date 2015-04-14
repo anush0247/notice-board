@@ -1,6 +1,7 @@
 from django import forms
 from users.models import Profile,Skill, Area, Education, Experience, Achievement, Role, RolePermission, UserRole
 from django.forms.widgets import CheckboxSelectMultiple  
+from django.forms.widgets import SelectMultiple 
 
 class ProfilePicForm(forms.ModelForm):
     class Meta:
@@ -32,13 +33,16 @@ class AddSkillForm(forms.ModelForm):
 class SkillsForm(forms.ModelForm):
     class Meta:
         model = Profile
-	fields = ['skills',]
+	fields = ('skills',)
+        #widget = {
+         #   'skills' : forms.SelectMultiple(attrs={"class":"ui fluid multiple search selection dropdown",}),
+        #}
+
 
     def __init__(self, *args, **kwargs):
 
         super(SkillsForm, self).__init__(*args, **kwargs)
-
-        self.fields["skills"].widget = CheckboxSelectMultiple()
+        self.fields["skills"].widget = SelectMultiple(attrs={"class":"ui fluid multiple search selection dropdown",})
         self.fields["skills"].queryset = Skill.objects.all() 
 
 
@@ -59,7 +63,7 @@ class AreasForm(forms.ModelForm):
 
         super(AreasForm, self).__init__(*args, **kwargs)
 
-        self.fields['areas'].widget = CheckboxSelectMultiple()
+        self.fields['areas'].widget = SelectMultiple(attrs={"class":"ui fluid multiple search selection dropdown",})
         self.fields["areas"].queryset = Area.objects.all() 
 
 class EducationForm(forms.ModelForm):

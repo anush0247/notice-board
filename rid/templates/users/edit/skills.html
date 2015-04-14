@@ -4,16 +4,28 @@
 {% block edit_icon %} tree {% endblock %}
 {% block skills %} active {% endblock %}
 {% block edit_body %}
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('select').dropdown();
+});
+</script>
 <form method="post" action="" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="ui form">
-    
+    <div class="field">
+      	{% if user.profile.skills.all %}
+	{% for item in user.profile.skills.all %}
+	<span class="ui label red">{{ item }}</span>
+	{% endfor%}
+	{% else %}
+	No Technical Skills specified 
+	{% endif%}
+    </div>
     <div class="field">
       <label>Mark your technical skills </label>
-      
-      {% for radio in form.skills %}
-	<div class="ui checkbox">{{ radio.tag }} <label>{{ radio.choice_label}} </label></div>&emsp; 
-      {% endfor %}
+      {{ form.skills }}
     </div>
     <div class="field">
       <button type="submit" class="ui mini button blue"><i class="icon Check "> </i>Update Skills </button>
