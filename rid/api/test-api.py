@@ -46,9 +46,23 @@ class ContactViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Profile.objects.all()
     renderer_classes = (JSONRenderer, )
     def get_queryset(self):
-	   return Profile.objects.filter(user=RidUser.get(rid=self.request.user.rid))
+        return Profile.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid))
 
-router.register(r'contact_info', UserViewSet)
+router.register(r'contact_info', ContactViewSet)
+
+class ProfilePicSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('user','profile_pic')
+
+class ProfilePicViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ProfilePicSerializer
+    queryset = Profile.objects.all()
+    renderer_classes = (JSONRenderer, )
+    def get_queryset(self):
+        return Profile.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid))
+
+router.register(r'profile_pic', ProfilePicViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
