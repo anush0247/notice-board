@@ -24,7 +24,7 @@ def basic(request):
     except RidUser.DoesNotExist:
         return HttpResponse(status=404)
     
-    if request.method == 'POST':
+    if request.method== 'GET':
         serializer = RidUserSerializer(basic_info)
         return JSONResponse(serializer.data)
     else:
@@ -38,7 +38,7 @@ def university_info(request):
     except RidUser.DoesNotExist:
         return HttpResponse(status=404)
     
-    if request.method == 'POST':
+    if request.method== 'GET':
         serializer = UniversitySerializer(university_info)
         return JSONResponse(serializer.data)
     else:
@@ -52,7 +52,7 @@ def contact_info(request):
     except Profile.DoesNotExist:
         return HttpResponse(status=404)
     
-    if request.method == 'POST':
+    if request.method== 'GET':
         serializer = ContactSerializer(contact_info)
         return JSONResponse(serializer.data)
     else:
@@ -69,7 +69,7 @@ def profile_pic(request):
     except Profile.DoesNotExist:
         return HttpResponse(status=404)
     
-    if request.method == 'POST':
+    if request.method== 'GET':
         serializer = ProfilePicSerializer(profile_pic)
         return JSONResponse(serializer.data)
     else:
@@ -84,7 +84,7 @@ def summary(request):
     except Profile.DoesNotExist:
         return HttpResponse(status=404)
 
-    if request.method == 'POST':
+    if request.method== 'GET':
         serializer = SummarySerializer(summary)
         return JSONResponse(serializer.data)
     else:
@@ -98,7 +98,7 @@ def education(request):
     except Education.DoesNotExist:
         return HttpResponse(status=404)
 
-    if request.method == 'POST':
+    if request.method== 'GET':
         serializer = EducationSerializer(education)
         return JSONResponse(serializer.data)
     else:
@@ -112,7 +112,7 @@ def areas(request):
     except Profile.DoesNotExist:
         return HttpResponse(status=404)
 
-    if request.method == 'POST':
+    if request.method== 'GET':
         serializer = ProfileAreaSerializer(area)
         return JSONResponse(serializer.data)
     else:
@@ -126,7 +126,7 @@ def roles(request):
     except UserRole.DoesNotExist:
         return HttpResponse(status=404)
 
-    if request.method == 'POST':
+    if request.method== 'GET':
         serializer = UserRoleSerializer(roles)
         return JSONResponse(serializer.data)
     else:
@@ -140,7 +140,7 @@ def skills(request):
     except Profile.DoesNotExist:
         return HttpResponse(status=404)
 
-    if request.method == 'POST':
+    if request.method== 'GET':
         serializer = ProfileSkillSerializer(skills)
         return JSONResponse(serializer.data)
     else:
@@ -154,7 +154,7 @@ def achievements(request):
     except Achievement.DoesNotExist:
         return HttpResponse(status=404)
 
-    if request.method == 'POST':
+    if request.method== 'GET':
         serializer = AchievementSerializer(achievement)
         return JSONResponse(serializer.data)
     else:
@@ -168,7 +168,7 @@ def experiences(request):
     except Experience.DoesNotExist:
         return HttpResponse(status=404)
 
-    if request.method == 'POST':
+    if request.method== 'GET':
         serializer = ExperienceSerializer(experience)
         return JSONResponse(serializer.data)
     else:
