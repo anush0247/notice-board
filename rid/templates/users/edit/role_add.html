@@ -4,6 +4,11 @@
 {% block edit_icon %} road {% endblock %}
 {% block roles %} active {% endblock %}
 {% block edit_body %}
+<script type="text/javascript">
+$(document).ready(function(){
+	$('select').dropdown();
+});
+</script>
 <form method="post" action="" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="ui form">
@@ -13,12 +18,10 @@
       {{ form.title }}
     </div>
     <div class="field">
-      <label> Role Permissions </label>
-      {% for radio in form.permissions %}
-	<div class="ui checkbox">{{ radio.tag }} <label>{{ radio.choice_label}} </label></div>&emsp; 
-      {% endfor %}
-     
+      <label>Mark Role Permissions </label>
+      {{ form.permissions }}
     </div>
+   
 
     <div class="field">
       <button type="submit" class="ui mini button green"><i class="icon plus"> </i>New Position & Role  </button>

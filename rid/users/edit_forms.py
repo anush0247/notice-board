@@ -1,6 +1,5 @@
 from django import forms
 from users.models import Profile,Skill, Area, Education, Experience, Achievement, Role, RolePermission, UserRole
-from django.forms.widgets import CheckboxSelectMultiple  
 from django.forms.widgets import SelectMultiple 
 
 class ProfilePicForm(forms.ModelForm):
@@ -92,7 +91,7 @@ class AddRoleForm(forms.ModelForm):
 
         super(AddRoleForm, self).__init__(*args, **kwargs)
 
-        self.fields['permissions'].widget = CheckboxSelectMultiple()
+        self.fields['permissions'].widget = SelectMultiple(attrs={"class":"ui fluid multiple search selection dropdown",})
         self.fields["permissions"].queryset = RolePermission.objects.all() 
 
 class UserRoleForm(forms.ModelForm):
