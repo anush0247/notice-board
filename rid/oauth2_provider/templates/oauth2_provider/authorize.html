@@ -1,6 +1,6 @@
 {% extends "oauth2_provider/base.html" %}
-{% block edit_title %} Authorize {% endblock %}
-{% block edit_title1 %} Authorize {% endblock %}
+{% block edit_title %} Authorize App # ({{ application.name }}) {% endblock %}
+{% block edit_title1 %} Authorize App # ({{ application.name }}) {% endblock %}
 {% block edit_icon %} Cubes {% endblock %}
 {% block dev_apps %} active {% endblock %}
 {% load i18n %}
@@ -27,12 +27,9 @@
                 {{ form.errors }}
                 {{ form.non_field_errors }}
 
-                <div class="control-group">
-                    <div class="controls">
-                        <input type="submit" class="btn btn-large" value="Cancel"/>
-                        <input type="submit" class="btn btn-large btn-primary" name="allow" value="Authorize"/>
-                    </div>
-                </div>
+                <input type="submit" class="ui button blue tiny" value="Cancel"/>
+                <input type="submit" class="ui button green tiny" name="allow" value="Authorize"/>
+
             </form>
 
         {% else %}

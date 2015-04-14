@@ -2,11 +2,14 @@ from django.forms import widgets
 from rest_framework import serializers
 from users.models import *
 from auth.models import RidUser
+from rest_framework import permissions
 
+from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
 
 class RidUserSerializer(serializers.ModelSerializer):
 
 	class Meta:
+		permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
 		model=RidUser
 		fields=('rid','first_name','last_name','date_of_birth','gender')
 

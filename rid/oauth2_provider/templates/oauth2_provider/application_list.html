@@ -8,13 +8,17 @@
 {% block edit_body %}
     <div class="block-center">
         {% if applications %}
-            <ul>
+            <div class="ui four cards">
                 {% for application in applications %}
-                    <li><a href="{{ application.get_absolute_url }}">{{ application.name }}</a></li>
+		  <div class="card">
+		    <div class="content">
+		      <a class="header" href="{{ application.get_absolute_url }}">{{ application.name }}</a>
+		    </div>
+		  </div>
                 {% endfor %}
-            </ul>
-
-            <a class="btn btn-success" href="{% url "oauth2_provider:register" %}">New Application</a>
+            </div>
+		<br>
+            <a class="ui button green tiny" href="{% url "oauth2_provider:register" %}"><i class="icon plus"></i> New Application</a>
         {% else %}
             <p>{% trans "No applications defined" %}. <a href="{% url 'oauth2_provider:register' %}">{% trans "Click here" %}</a> {% trans "if you want to register a new one" %}</p>
         {% endif %}

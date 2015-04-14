@@ -25,4 +25,9 @@ class RegistrationForm(forms.ModelForm):
     """
     class Meta:
         model = get_application_model()
-        fields = ('name', 'client_id', 'client_secret', 'client_type', 'authorization_grant_type', 'redirect_uris')
+        fields = ['name', 'client_id', 'client_secret', 'client_type', 'authorization_grant_type', 'redirect_uris']
+	exclude = ('user',)
+	widget = {
+		'name' : forms.TextInput(attrs={'placeholder':'Enter your mobile number', 'disabled':"disabled"}),
+	}
+
