@@ -3,9 +3,6 @@
 {{ user.rid }}'s Settings &raquo; {% block edit_title %} {% endblock %}
 {% endblock %}
 {% block content %}
-<div class="ui grid">
-  <div class="row">
-    <div class="thirteen wide column">
       <script>
     	$(document).ready(function(){
 	    $('.message .close').on('click', function() {
@@ -14,6 +11,9 @@
 	});
     	
       </script>
+<div class="ui grid">
+  <div class="row">
+    <div class="thirteen wide column">
       {% if messages %}
       {% for message in messages %}
       <div {% if message.tags %} class="ui message {{ message.tags }}"{% endif %}><i class="close icon"></i>{{ message }}</div>

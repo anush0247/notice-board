@@ -23,7 +23,7 @@
       <a class="item {% block menu_home  %} {% endblock %}" href="/"><b> <i class="icon Openid"></i> Online Portal <small>v2.0</small></b></a>
       <div class="right menu">
 	<a class="item {% block notifications  %} {% endblock %}" href="/notifications/"><i class="Announcement icon"></i> Notifications </a>
-	<div class="item ui dropdown {% block menu_faculty  %} {% endblock %}" id="dept_menu">
+	<div class="item pointing link ui dropdown {% block menu_faculty  %} {% endblock %}" id="dept_menu">
 	  <i class="University icon"></i> Departments<i class="icon dropdown"></i>
 	  <div class="menu">
 	    {% for dept in dept_names %}
@@ -31,15 +31,14 @@
 	    {% endfor %}
 	  </div>
 	</div>
-	<div class="item ui dropdown {% block menu_developer  %} {% endblock %}" id="developer_menu">
+	<div class="item pointing link ui dropdown {% block menu_developer  %} {% endblock %}" id="developer_menu">
 	  <i class="code icon"></i> Developers <i class="icon dropdown"></i>
 	  <div class="menu">
-		<a class="item " href="/dev/intro/"><i class="icon Align Justify "></i> Introduction </a>
 		<a class="item " href="/dev/docs/"><i class="icon File Text"></i> Documentation</a>
 		<a class="item " href="/dev/apps/"><i class="icon Cubes"></i> Applications</a>
 	  </div>
 	</div>
-	<div class="item ui dropdown {% block menu_user  %} {% endblock %}" id="user_menu">
+	<div class="item pointing link ui dropdown {% block menu_user  %} {% endblock %}" id="user_menu">
 	  <i class="icon user"></i> {{ user.rid }} <i class="icon dropdown"></i>
 	  <div class="menu">
 	    <!--<a class="item" href="/messages/"><i class="inbox icon"></i> Messages</a>-->
@@ -56,6 +55,23 @@
 	 <div class="sixteen wide column">
 	   <div class="" style="min-height:550px;">
 	    {% block content %} {% endblock %}
+<!--
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.ui.dropdown').dropdown();
+});
+</script>
+<select name="skills" multiple="" class="ui fluid multiple search selection dropdown">
+	<option value="">Select Skills</option>
+	<option value="css">CSS</option>
+	<option value="html">HTML</option>
+	<option value="javascript">Javascript</option>
+	<option value="design">Graphic Design</option>
+	<option value="plumbing">Plumbing</option>
+	<option value="mech">Mechanical Engineering</option>
+	<option value="repair">Kitchen Repair</option>
+</select>
+-->
 	   </div>
 	 </div>
 	</div>
