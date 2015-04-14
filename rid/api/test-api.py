@@ -92,6 +92,60 @@ class EducationViewSet(viewsets.ReadOnlyModelViewSet):
 
 router.register(r'education', EducationViewSet)
 
+class AreaSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Area
+        fields = ('title',)
+
+class AreaViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = AreaSerializer
+    queryset = Area.objects.all()
+    renderer_classes = (JSONRenderer, )
+     
+router.register(r'areas_list', AreaViewSet)
+
+class UserAreaSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('user','areas')
+
+class UserAreaViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = UserAreaSerializer
+    queryset = Profile.objects.all()
+    renderer_classes = (JSONRenderer, )
+    def get_queryset(self):
+        return Profile.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid))
+
+router.register(r'areas', UserAreaViewSet)
+
+
+class SkillSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Skill
+        fields = ('title',)
+
+class SkillViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = SkillSerializer
+    queryset = Skill.objects.all()
+    renderer_classes = (JSONRenderer, )
+     
+router.register(r'skill_list', SkillViewSet)
+
+class UserSkillSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('user','skills')
+
+class UserSkillViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = UserSkillSerializer
+    queryset = Profile.objects.all()
+    renderer_classes = (JSONRenderer, )
+    def get_queryset(self):
+        return Profile.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid))
+
+router.register(r'skills', UserSkillViewSet)
+
+
 urlpatterns = [
     url(r'^', include(router.urls)),
 ]
