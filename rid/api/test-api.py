@@ -92,6 +92,36 @@ class EducationViewSet(viewsets.ReadOnlyModelViewSet):
 
 router.register(r'education', EducationViewSet)
 
+
+class AchievementSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Achievement
+        fields = ('user','issuer','title','location','period','description')
+
+class AchievementViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = AchievementSerializer
+    queryset = Achievement.objects.all()
+    renderer_classes = (JSONRenderer, )
+    def get_queryset(self):
+        return Achievement.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid))
+
+router.register(r'achievements', AchievementViewSet)
+
+
+class ExperienceSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Experience
+        fields = ('user','organization','title','location','period','description')
+
+class ExperienceViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ExperienceSerializer
+    queryset = Experience.objects.all()
+    renderer_classes = (JSONRenderer, )
+    def get_queryset(self):
+        return Experience.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid))
+
+router.register(r'experiences', ExperienceViewSet)
+
 class AreaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Area
