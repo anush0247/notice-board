@@ -148,7 +148,6 @@ class UserAreaViewSet(viewsets.ReadOnlyModelViewSet):
 
 router.register(r'areas', UserAreaViewSet)
 
-
 class SkillSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Skill
@@ -160,7 +159,6 @@ class SkillViewSet(viewsets.ReadOnlyModelViewSet):
     renderer_classes = (JSONRenderer, )
      
 router.register(r'skill_list', SkillViewSet)
-
 
 class UserSkillSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -175,6 +173,44 @@ class UserSkillViewSet(viewsets.ReadOnlyModelViewSet):
         return Profile.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid))
 
 router.register(r'skills', UserSkillViewSet)
+
+class RolePermissionSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = RolePermission
+        fields = ('title','is_verified')
+
+class RolePermissionViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = RolePermissionSerializer
+    queryset = RolePermission.objects.all()
+    renderer_classes = (JSONRenderer, )
+     
+router.register(r'role_permission_list', RolePermissionViewSet)
+
+class RoleSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Role
+        fields = ('title','permissions','is_verified')
+
+class RoleViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = RoleSerializer
+    queryset = Role.objects.all()
+    renderer_classes = (JSONRenderer, )
+     
+router.register(r'role_list', RoleViewSet)
+
+class UserRoleSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = UserRole
+        fields = ('user','role','is_verified')
+
+class UserRoleViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = UserRoleSerializer
+    queryset = UserRole.objects.all()
+    renderer_classes = (JSONRenderer, )
+    def get_queryset(self):
+        return UserRole.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid))
+
+router.register(r'roles', UserRoleViewSet)
 
 
 urlpatterns = [
