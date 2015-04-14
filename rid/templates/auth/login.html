@@ -14,14 +14,14 @@
       
       <div class="row">
 	<div class="five wide column"></div>
-	<div class="six wide column">
+	<div class="five wide column">
+	  
 	  <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
 	    <div class="ui small form segment piled  blue">
-	      {% csrf_token %}
 	      {% if form.errors %}
-	      <span class="ui error message">Invalid Username / Password </span>
+	      <center><span class="ui red fluid message" style="padding-top:10px; padding-bottom:-10px;">Invalid Username / Password </span></center>
 	      {% endif %}
-	      
+	      {% csrf_token %}
 	      <div class="ui blue dividing header"><i class="sign in icon"></i><div class="content">Login</div></div>
 	      <div class="field">
 		<label>Username</label>
