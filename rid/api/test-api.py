@@ -161,6 +161,7 @@ class SkillViewSet(viewsets.ReadOnlyModelViewSet):
      
 router.register(r'skill_list', SkillViewSet)
 
+
 class UserSkillSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Profile
