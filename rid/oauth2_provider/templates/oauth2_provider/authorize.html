@@ -1,7 +1,10 @@
 {% extends "oauth2_provider/base.html" %}
-
+{% block edit_title %} Authorize {% endblock %}
+{% block edit_title1 %} Authorize {% endblock %}
+{% block edit_icon %} Cubes {% endblock %}
+{% block dev_apps %} active {% endblock %}
 {% load i18n %}
-{% block content %}
+{% block edit_body %}
     <div class="block-center">
         {% if not error %}
             <form id="authorizationForm" method="post">

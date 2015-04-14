@@ -16,6 +16,7 @@ urlpatterns = patterns('',
         url(r'^depts/', include('users.depts_urls')),
         url(r'^dev/', include('dev.urls')),
         url(r'^admin/', include(admin.site.urls)),
+	url(r'^dev/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 )
 
 if settings.DEBUG:

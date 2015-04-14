@@ -3,65 +3,49 @@
   <head>
     
     <meta charset="utf-8">
-    <title>Online Portal &rarr; Login </title>
+    <title>Online Portal &raquo; Login </title>
     
     <link href="/static/assets/semantic.min.css" rel="stylesheet" type="text/css"/>
     <link href="/static/assets/app.css" rel="stylesheet" type="text/css">
   </head>
   <body class="body_layout">
-    <center>
-      <div class="ui grid" style="padding-top:15%;">
-	<div class="row">
-	  <div class="six wide column">
-	    &nbsp;
-	  </div>
-	  <div class="four wide column">
-	    <div class="ui piled segment blue " style="padding:7%;padding-top:0%;">
-	      <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
-		{% csrf_token %}
-		{% if form.errors %}
-		<span class="ui error message">Invalid Username / Password </span>
-		{% endif %}
-	     
-		<div class="ui blue dividing header">
-		  <i class="sign in icon"></i>
-		  <div class="content">
-		    Login
-		  </div>
-		</div>
-		<div class="ui form small">
-		  <div class="six field">
-		    <div class="field small ui labeled input ">
-		      <div class="ui label"> <i class="user icon"></i></div>
-		      <input type="text" name="username" placeholder="username">
-		    </div>
-		    <div class="field small ui labeled input">
-		      <div class="ui label"> <i class="key icon"></i></div>
-		      <input type="password" name="password" placeholder="my password">
-		    </div>
-		    <div class="field ">
-		      <button type="submit" class=" blue fluid ui button small"><i class="angle double right icon"></i> Continue to Online Portal</button>
-		    </div>
-		  </div>
-		</div>
-		<input type="hidden" name="next" value="{{ next }}" />
-	      </form>
-	      <a href="#" class="text blue" style="font-size:11px;"><i class="question icon"></i> Lost Password</a>  
-	    </div>
-	  </div>
-	  <div class="six wide column">
-	    &nbsp;
-	  </div>
-	  
-	</div>
-	<div class="row">
-	  <div class="sixteen wide column" style="text-align:center;">
-	    
-	  </div>
-	</div>
-      </div>
+    
+    <div class="ui grid" style="padding-top:10%;">
       
-    </center>
+      <div class="row">
+	<div class="five wide column"></div>
+	<div class="six wide column">
+	  <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+	    <div class="ui small form segment piled  blue">
+	      {% csrf_token %}
+	      {% if form.errors %}
+	      <span class="ui error message">Invalid Username / Password </span>
+	      {% endif %}
+	      
+	      <div class="ui blue dividing header"><i class="sign in icon"></i><div class="content">Login</div></div>
+	      <div class="field">
+		<label>Username</label>
+		<input placeholder="Username" name="username" type="text">
+	      </div>
+	      <div class="field">
+		<label>Password</label>
+		<input placeholder="password" name="password" type="password">
+	      </div>
+	      <input type="hidden" name="next" value="{{ next }}" />
+	      <button class="blue fluid ui button small" type="submit"><i class="angle double right icon"></i> Continue to Online Portal</button>
+	      <br>
+	      <div class="field">
+		<lable>	<a href="#" class="text blue" style="font-size:11px; float:right;"><i class="question icon"></i> Lost Password</a></label>
+	      </div>
+              <br>
+	    </div>
+	  </form>
+	</div>
+	<div class="five wide column"></div>
+      </div>
+    </div>
+    
+    
     
   </body>
 </html>

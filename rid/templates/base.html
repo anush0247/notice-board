@@ -19,48 +19,55 @@
      
       //alert($("#user_menu").dropdown());
     </script>
-    <div class="ui menu blue">
-      <a class="item {% block menu_home  %} {% endblock %}" href="/"><b> <i class="icon Openid"></i> Online Portal <small>v2.0</small></b></a>
-      <div class="right menu">
-	<a class="item {% block notifications  %} {% endblock %}" href="/notifications/"><i class="Announcement icon"></i> Notifications </a>
-	<div class="item pointing link ui dropdown {% block menu_faculty  %} {% endblock %}" id="dept_menu">
-	  <i class="University icon"></i> Departments<i class="icon dropdown"></i>
-	  <div class="menu">
-	    {% for dept in dept_names %}
-	    <a class="item" href="/depts/{{ dept.0}}">{{dept.1}} </a>
-	    {% endfor %}
-	  </div>
-	</div>
-	<div class="item pointing link ui dropdown {% block menu_developer  %} {% endblock %}" id="developer_menu">
-	  <i class="code icon"></i> Developers <i class="icon dropdown"></i>
-	  <div class="menu">
-		<a class="item " href="/dev/docs/"><i class="icon File Text"></i> Documentation</a>
-		<a class="item " href="/dev/apps/"><i class="icon Cubes"></i> Applications</a>
-	  </div>
-	</div>
-	<div class="item pointing link ui dropdown {% block menu_user  %} {% endblock %}" id="user_menu">
-	  <i class="icon user"></i> {{ user.rid }} <i class="icon dropdown"></i>
-	  <div class="menu">
-	    <!--<a class="item" href="/messages/"><i class="inbox icon"></i> Messages</a>-->
-	    <a class="item" href="/users/{{ user.rid }}"><i class="edit icon"></i> Profile</a>
-	    <a class="item" href="/auth/settings/change_password/"><i class="settings icon"></i> Settings</a>
-	    <a class="item" href="/auth/logout/"><i class="sign out icon"></i> Logout</a>	    
-	  </div>
-	</div>
-      </div>
-    </div>
     
-    <div class="ui grid">
+    
+    <div class="ui page grid">
+	<div class="row">
+		<div class="sixteen wide column">
+		    <div class="ui page pointing menu blue">
+		      <a class="item {% block menu_home  %} {% endblock %}" href="/"><b> <i class="icon Openid"></i> Online Portal <small>v2.0</small></b></a>
+		      <div class="right menu">
+			<a class="item {% block notifications  %} {% endblock %}" href="/notifications/"><i class="Announcement icon"></i> Notifications </a>
+			<div class="item pointing link ui dropdown {% block menu_faculty  %} {% endblock %}" id="dept_menu">
+			  <i class="University icon"></i> Departments<i class="icon dropdown"></i>
+			  <div class="menu">
+			    {% for dept in dept_names %}
+			    <a class="item" href="/depts/{{ dept.0}}">{{dept.1}} </a>
+			    {% endfor %}
+			  </div>
+			</div>
+			<div class="item pointing link ui dropdown {% block menu_developer  %} {% endblock %}" id="developer_menu">
+			  <i class="code icon"></i> Developers <i class="icon dropdown"></i>
+			  <div class="menu">
+				<a class="item " href="/dev/docs/"><i class="icon File Text"></i> Documentation</a>
+				<a class="item " href="/dev/applications/"><i class="icon Cubes"></i> Applications</a>
+			  </div>
+			</div>
+			<div class="item pointing link ui dropdown {% block menu_user  %} {% endblock %}" id="user_menu">
+			  <i class="icon user"></i> {{ user.rid }} <i class="icon dropdown"></i>
+			  <div class="menu">
+			    <!--<a class="item" href="/messages/"><i class="inbox icon"></i> Messages</a>-->
+			    <a class="item" href="/users/{{ user.rid }}"><i class="edit icon"></i> Profile</a>
+			    <a class="item" href="/auth/settings/change_password/"><i class="settings icon"></i> Settings</a>
+			    <a class="item" href="/auth/logout/"><i class="sign out icon"></i> Logout</a>	    
+			  </div>
+			</div>
+		      </div>
+		    </div>
+
+		</div>	
+	</div>
        <div class="row">
 	 <div class="sixteen wide column">
 	   <div class="" style="min-height:550px;">
 	    {% block content %} {% endblock %}
-<!--
-<script type="text/javascript">
+
+<!--<script type="text/javascript">
 $(document).ready(function(){
 	$('.ui.dropdown').dropdown();
 });
 </script>
+<br><br>
 <select name="skills" multiple="" class="ui fluid multiple search selection dropdown">
 	<option value="">Select Skills</option>
 	<option value="css">CSS</option>
@@ -70,8 +77,8 @@ $(document).ready(function(){
 	<option value="plumbing">Plumbing</option>
 	<option value="mech">Mechanical Engineering</option>
 	<option value="repair">Kitchen Repair</option>
-</select>
--->
+</select>-->
+
 	   </div>
 	 </div>
 	</div>

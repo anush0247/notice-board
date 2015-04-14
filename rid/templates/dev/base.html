@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-{{ user.rid }}'s Settings &raquo; {% block edit_title %} {% endblock %}
+Developers &raquo; {% block oauth_title %} {% endblock %}
 {% endblock %}
 {% block content %}
       <script>
@@ -35,7 +35,7 @@
       <div class="ui vertical blue menu fluid">
 	<a class="item header"><i class="icon code"></i> Developers </a>
 	<a class="item {% block dev_docs %}{% endblock %}" href="/dev/docs/"><i class="icon File Text"></i> Documentation</a>
-	<a class="item {% block dev_apps %}{% endblock %}" href="/dev/apps/"><i class="icon Cubes"></i> Applications</a>
+	<a class="item {% block dev_apps %}{% endblock %}" href="/dev/applications/"><i class="icon Cubes"></i> Applications</a>
       </div>
     </div>
   </div>
