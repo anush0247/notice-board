@@ -64,6 +64,34 @@ class ProfilePicViewSet(viewsets.ReadOnlyModelViewSet):
 
 router.register(r'profile_pic', ProfilePicViewSet)
 
+class SummarySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('user','summary')
+
+class SummaryViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = SummarySerializer
+    queryset = Profile.objects.all()
+    renderer_classes = (JSONRenderer, )
+    def get_queryset(self):
+        return Profile.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid))
+
+router.register(r'summary', SummaryViewSet)
+
+class EducationSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Education
+        fields = ('user','school','period','degree','stream','grade')
+
+class EducationViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = EducationSerializer
+    queryset = Education.objects.all()
+    renderer_classes = (JSONRenderer, )
+    def get_queryset(self):
+        return Education.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid))
+
+router.register(r'education', EducationViewSet)
+
 urlpatterns = [
     url(r'^', include(router.urls)),
 ]
