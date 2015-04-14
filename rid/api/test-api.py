@@ -36,6 +36,20 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
 router.register(r'university_info', UserViewSet)
 
+class UserInfoSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = RidUser
+        fields = ('rid','first_name','last_name','gender','date_of_birth','dept','batch','year')
+
+class UserInfoViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = UserInfoSerializer
+    queryset = RidUser.objects.all()
+    renderer_classes = (JSONRenderer, )
+    def get_queryset(self):
+	   return RidUser.objects.filter(rid=self.request.user.rid)
+
+router.register(r'user_info', UserInfoViewSet)
+
 class ContactSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Profile
@@ -173,6 +187,20 @@ class UserSkillViewSet(viewsets.ReadOnlyModelViewSet):
         return Profile.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid))
 
 router.register(r'skills', UserSkillViewSet)
+
+class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('user','mobile','url','email','profile_pic','summary','areas','skills')
+
+class UserProfileViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = UserProfileSerializer
+    queryset = Profile.objects.all()
+    renderer_classes = (JSONRenderer, )
+    def get_queryset(self):
+        return Profile.objects.filter(user=RidUser.objects.get(rid=self.request.user.rid))
+
+router.register(r'profile_info', UserProfileViewSet)
 
 class RolePermissionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
